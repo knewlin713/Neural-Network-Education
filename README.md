@@ -1,11 +1,17 @@
 
 # (Written by Jesus, make sure you follow the rules below before developing locally)
 1. Make sure your node version is lts/iron
+
     a. Download node version manager (nvm), you can google and download it for your device
+
     b. in the terminal, use command "nvm -v" to see if you successfully downloaded it
+
     c. "nvm install lts\iron"
+
     d. "nvm use lts\iron"
+
     e. if you type "nvm ls", you should see an arrow and your current version highlighted
+    
 2. Make sure you pulled the most recent github version
 
 After cloning / pulling and making sure you are in the correct node version (step 1), do step 3:
