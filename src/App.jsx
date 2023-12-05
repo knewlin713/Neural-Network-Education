@@ -15,7 +15,9 @@ import 'typeface-ibm-plex-mono';
 function App() {
   const [count, setCount] = useState(0)
   const styles = {
-    backgroundColor: '#000000', // Set your desired background color here
+    // backgroundImage: `url(${backgroundImage})`, // Set your background image here
+    // backgroundSize: 'cover',
+    backgroundColor: '#2D2D2D', // Set your desired background color here
     minHeight: '100vh', // Ensures the background color covers the entire viewport height
   };
   const theme = extendTheme({
@@ -23,6 +25,17 @@ function App() {
       body: 'IBM Plex Mono',
       heading: 'IBM Plex Mono',
     },
+    // colors: {
+    //   primary: {
+    //     500: "#56007a"
+    //   },
+    //   secondary: {
+    //     500: "#8d53a5"
+    //   },
+    //   action: {
+    //     500: "#5dd39e"
+    //   }
+    // }
   });
   return (
     <div style={styles}>
