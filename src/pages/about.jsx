@@ -1,10 +1,10 @@
 import Header from '../components/header';
-
+import { Heading } from '@chakra-ui/react'
 export default function About() {
     return(
         <div>
             <Header />
-            <h2> About page</h2>
+            <Heading color="white">About</Heading>
         </div>
     )
 }

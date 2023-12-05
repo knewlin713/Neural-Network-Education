@@ -1,16 +1,11 @@
 import Header from '../components/header';
-import { useNavigate } from "react-router-dom";
-
+import { Heading } from "@chakra-ui/react"
 export default function Home(){
-    let navigate = useNavigate();
-    const handleRouteChange = () => {
-        navigate('/about'); //when we choose the path to navigate to, use / + route_name
-    }
+  
     return(
         <div>
             <Header />
-            <h2> Home page</h2>
-            <button onClick={handleRouteChange}>About</button>
+            <Heading color="white">Home Page Whereas disregard and contempt for human rights have resulted</Heading>
         </div>
     )
 }
