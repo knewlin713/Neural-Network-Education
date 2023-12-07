@@ -1637,6 +1637,11 @@
     "@sigstore/protobuf-specs" "^0.2.1"
     tuf-js "^2.1.0"
 
+"@tensorflow-models/mobilenet@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/@tensorflow-models/mobilenet/-/mobilenet-2.1.1.tgz"
+  integrity sha512-tv4s4UFzG74PkIwl4gT64AyRnCcNUq+s8wSzge+LN/Puc1VUuInZghrobvpNlWjZtVi1x1d1NsBD//TfOr2ssA==
+
 "@tensorflow/tfjs-backend-cpu@4.14.0":
   version "4.14.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-4.14.0.tgz"
@@ -1655,12 +1660,12 @@
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-converter@4.14.0":
+"@tensorflow/tfjs-converter@^4.9.0", "@tensorflow/tfjs-converter@4.14.0":
   version "4.14.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-4.14.0.tgz"
   integrity sha512-iXPffVNrDxc1R5Ble9Ox+jL2nFpUp8EBsUYYavJvRWaFh7ieuXjTt7J9WwMZR0KobJcgyUA44sn7XeLc2B1YUw==
 
-"@tensorflow/tfjs-core@>= 1.0.0", "@tensorflow/tfjs-core@4.14.0":
+"@tensorflow/tfjs-core@^4.9.0", "@tensorflow/tfjs-core@>= 1.0.0", "@tensorflow/tfjs-core@4.14.0":
   version "4.14.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-4.14.0.tgz"
   integrity sha512-VP+oqEtngj4yKjl6InhV7SYIAhAYJ5Db4rD71M8K37HUSB1Aej8dvoIpc+vT31FDPh5p8auss1/fTpklRZ+VWw==
