@@ -20,8 +20,8 @@ export default function Playground() {
             </Box> */}
 
             {/* tensorflow attempt */}
-            <Box maxWidth="90%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6">
-                <TensorFlowComponent/>
+            <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="50%">
+                <TensorFlowComponent/> 
             </Box>
             {/* <TensorFlowComponent /> */}
         </div>
