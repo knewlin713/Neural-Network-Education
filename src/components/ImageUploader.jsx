@@ -2,7 +2,6 @@ import * as tf from '@tensorflow/tfjs'
 import { MnistData } from '../assets/data'
 import * as tfvis from '@tensorflow/tfjs-vis' 
 import { Box, Input, Image, Grid, Flex, Text } from '@chakra-ui/react'
-import * as mobilenetmodule from '@tensorflow-models/mobilenet'
 import { useEffect, useState } from 'react'
 import './ImageUploader.css'
 

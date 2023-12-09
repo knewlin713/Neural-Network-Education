@@ -5,6 +5,7 @@ import { Box, Flex, Spacer, Heading, Button, ButtonGroup } from '@chakra-ui/reac
 import NeuralNetwork from '../components/NeuralNetwork';
 import ImageUploader from '../components/ImageUploader';
 import { useState } from 'react';
+import TensorFlowTest from '../components/TensorFlowTest';
 
 export default function Playground() {
     const [testImageIndex, setTestImageIndex] = useState(-1);
@@ -22,13 +23,14 @@ export default function Playground() {
         <div>
             <Header />
             <Heading color="white">Playground</Heading>
-            
-
-            {/* tensorflow attempt */}
+            <Flex>
             <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="50%">
                 <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
             </Box>
-            {/* <TensorFlowComponent /> */}
+            <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="50%">
+                <TensorFlowTest testImage={images[testImageIndex]}/>
+            </Box>
+            </Flex>
         </div>
     )
 }
