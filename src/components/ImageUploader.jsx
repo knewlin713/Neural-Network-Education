@@ -4,16 +4,16 @@ import * as tfvis from '@tensorflow/tfjs-vis'
 import { Box, Input, Image, Grid, Flex, Text } from '@chakra-ui/react'
 import * as mobilenetmodule from '@tensorflow-models/mobilenet'
 import { useEffect, useState } from 'react'
-import './TensorFlowComponent.css'
+import './ImageUploader.css'
 
-export default function TensorFlowComponent() {
+export default function ImageUploader({ testImageIndex, images, updateTestImageIndex, updateImages }) {
   //1. Load model
   // const model = mobilenetmodule.load();
   // console.log(model);
   let model = undefined;
   const [path, setPath] = useState();
   //List of image objects with required info
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   //focusedImage: index of the focusedImage
   const [focusedImageIndex, setFocusedImageIndex] = useState(-1);
 
@@ -44,19 +44,19 @@ export default function TensorFlowComponent() {
       // setPath(URL.createObjectURL(file));
       console.log(images);
       console.log(path);
-      setImages([...images, {src: URL.createObjectURL(file), highlighted: 0}]);
+      updateImages([...images, {src: URL.createObjectURL(file), highlighted: 0}]);
       console.log(images);
       // console.log(images);
     }
   } 
   const handleImageClick = (clickedImage, index) => {
       console.log(images);
-      if (focusedImageIndex === index) { //if the previously focused image == current (deselecting)
-        setFocusedImageIndex(-1);
+      if (testImageIndex === index) { //if the previously focused image == current (deselecting)
+        updateTestImageIndex(-1);
       } else {
-        setFocusedImageIndex(index);
+        updateTestImageIndex(index);
       }
-      setImages((prevImages) =>
+      updateImages((prevImages) =>
         prevImages.map((image) => {
           
           return {
@@ -72,7 +72,7 @@ export default function TensorFlowComponent() {
     return (
     <div>
       <Flex height='250px' widht='250px' alignItems={'center'} justifyContent={'center'}> 
-        {focusedImageIndex != -1 ? <Image src={images[focusedImageIndex].src}/> : <Text>No Image Selected </Text>}
+        {testImageIndex != -1 ? <Image src={images[testImageIndex].src}/> : <Text>No Image Selected </Text>}
       </Flex>
       <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
