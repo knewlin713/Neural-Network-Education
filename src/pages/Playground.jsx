@@ -13,6 +13,8 @@ export default function Playground() {
     const [testImageIndex, setTestImageIndex] = useState(-1);
     const [images, setImages] = useState([]);
     const [classes, setClasses] = useState([]);
+    const [model, setModel] = useState();
+    const [activations, setActivations] = useState();
     //testImage: {classID: number, imagePath: string}
     const [trainingData, setTrainingData] = useState([
         {classID: 0 , imagePath: 'src/trainingData/dog1.jpeg'},
@@ -37,6 +39,14 @@ export default function Playground() {
     const updateClasses = (newClass) => {
         setClasses(newClass);
     }
+
+    const updateModel = (newModel) => {
+        setModel(newModel);
+    }
+
+    const updateActivations = (newActivation) => {
+        setActivations(newActivation);
+    }
     
     return(
         <div>
@@ -46,13 +56,17 @@ export default function Playground() {
 
             <Flex>
                 <ClassManager classes={classes} updateClasses={updateClasses} trainingData={trainingData} updateTrainingData={updateTrainingData}/>
-                <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="50%">
+                <Box maxWidth="10%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="100%">
                     <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
                 </Box>
-                <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="50%">
-                    <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} updateTrainingData={updateTrainingData}/>
+                <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" minHeight="100%">
+                    <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
                 </Box>
+                
             </Flex>
+            <Box direction={'column'} justifyContent={'center'} alignItems={'center'} maxWidth="100%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" minHeight="100%">
+                <NeuralNetwork model={model} classes={classes} />
+            </Box>
         </div>
     )
 }

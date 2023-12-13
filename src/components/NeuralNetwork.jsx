@@ -1,55 +1,160 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { Button } from '@chakra-ui/react'
+import { useState } from 'react';
+import {select} from 'd3'
+import {Flex, Center} from '@chakra-ui/react'
+import { layer } from '@tensorflow/tfjs-vis/dist/show/model';
 
-const NeuralNetwork = () => {
-  useEffect(() => {
-    // D3.js code for neural network visualization
-    // You can customize this code based on your network structure
-    const svg = d3.select('#neural-network');
 
-    const nodes = [
-      { layer: 1, id: 1 },
-      { layer: 1, id: 2 },
-      { layer: 2, id: 3 },
-      { layer: 2, id: 4 },
-      { layer: 3, id: 6 },
-    ];
+export default function NeuralNetwork({ model, updateModel, activations, classes }) {
+  const svgRef = useRef(null);
+  const [layerSizes, setLayerSizes] = useState([]);
+  const [hiddenLayerSizes, setHiddenLayersSize] = useState([]);
+  // useEffect(() => {
+  //   const svg = select(svgRef.current).attr('height', 400).attr('width', 800);
+
+  // }, [])
+  const visualizeNeuralNetwork = () => {
+    const layers = model.layers;
+    const inputLayerSize = layers[0].kernel.shape[0];
+
+    // Extract the sizes of hidden layers
+    const hiddenLayersSizes = layers.slice(1).map((layer) => layer.kernel.shape[0]);
+    setHiddenLayersSize(hiddenLayersSizes);
+
+    // Create an array to represent the layer sizes including input and output layers
+    setLayerSizes([inputLayerSize, ...hiddenLayersSizes, classes.length]);
+    // const maxNeurons = Math.max(...layerSizes);
+    // const svgWidth = 100 + layerSizes.length * 150; // Adjust the multiplier based on your preferences
+    // const svgHeight = 2 * maxNeurons * 25;
+    console.log(layerSizes);
+    const svg = d3.select(svgRef.current)
+    svg.selectAll('*').remove();
+
+    drawLayer(svg, 100, inputLayerSize, 0, "input layer");
+    hiddenLayerSizes.forEach((size, i) => {
+      drawLayer(svg, (i + 2) * 100 , size, i + 1, "Hidden layer " + i);
+    })
+    drawLayer(svg, layerSizes.length * 100 ? layerSizes.length * 100 : 200, classes.length, 1, 'output layer');
+    console.log(svg);
+  }
+
+  const drawLayer = (svg, x, size, index, layerName) => {
+    const svgHeight = parseInt(svg.attr('height'));
+    const centerY = svgHeight / 2;
+    // const maxNeurons = Math.max(...layerSizes);
+    // const svgHeight = 2 * maxNeurons * 25;
+
+    // svg.selectAll('*').remove();
+    // const layer = svg.append('g');
+
+    const pre = calcPrefixNodes(size, index);
+    console.log(pre);
     
-    const links = [
-      { source: 1, target: 3 },
-      { source: 2, target: 3 },
-      { source: 1, target: 4 },
-      { source: 2, target: 4 },
-      { source: 3, target: 6 },
-      { source: 4, target: 6 },
-    ];
+    if (size > 6) {
+      const layerNameText = svg.append('g')
+      .append('text')
+      .attr('x', x)
+      .attr('y', centerY - (pre * 50) - 40)
+      .text(layerName)
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 'bold');
 
-    const node = svg
-      .selectAll('.node')
-      .data(nodes)
+      const nodesBefore = svg.append('g')
+      .selectAll("circle")
+      .data(d3.range(pre))
       .enter()
-      .append('circle')
-      .attr('class', 'node')
-      .attr('r', 10)
-      .attr('fill', 'blue');
+      .append("circle")
+      .attr("cx", x)
+      .attr("cy", (data) => centerY - (data + pre / 2) * 50 )
+      .attr("r", 15)
+      .attr("fill", 'blue')
+      .attr('stroke', 'black')
 
-    const link = svg
-      .selectAll('.link')
-      .data(links)
+      const elipse = svg.append('g')
+      .append('text')
+      .attr('x', x)
+      .attr('y', centerY)
+      .text('...')
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 'bold')
+      
+      const nodesAfter = svg.append('g')
+      .selectAll("circle")
+      .data(d3.range(pre))
       .enter()
-      .append('line')
-      .attr('class', 'link')
-      .attr('stroke', 'black');
+      .append("circle")
+      .attr("cx", x)
+      .attr("cy", (data) => centerY + (data + pre / 2) * 50 )
+      .attr("r", 15)
+      .attr("fill", 'blue')
+      .attr('stroke', 'black')
 
-    node.attr('cx', (d) => d.layer * 100).attr('cy', (d) => ((d.id % 2) + 1)* 50 );
-    link
-      .attr('x1', (d) => nodes.find((n) => n.id === d.source).layer * 100)
-      .attr('y1', (d) => (nodes.find((n) => n.id === d.source).id % 2 + 1) * 50)
-      .attr('x2', (d) => nodes.find((n) => n.id === d.target).layer * 100)
-      .attr('y2', (d) => (nodes.find((n) => n.id === d.target).id% 2 + 1) * 50);
-  }, []);
+      const neuronSize = svg.append('g')
+      .append('text')
+      .attr('x', x)
+      .attr('y', centerY + (pre * 50) + 50) // Adjust the position based on your preference
+      .text(`Neurons: ${size}`)
+      .attr('text-anchor', 'middle');
 
-  return <svg id="neural-network" width="500" height="400"></svg>;
+    } else {
+      const layerNameText = svg.append('g')
+      .append('text')
+      .attr('x', x)
+      .attr('y', centerY - (size * 25))
+      .text(layerName)
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 'bold');
+      const layer = svg.append('g')
+      .selectAll("circle")
+      .data(d3.range(size))
+      .enter()
+      .append("circle")
+      .attr("cx", x)
+      .attr("cy", (data) => centerY + (data - (size - 1) / 2) * 50)
+      .attr("r", 15)
+      .attr("fill", 'blue')
+      .attr('stroke', 'black')
+
+      const neuronSize = svg.append('g')
+      .append('text')
+      .attr('x', x)
+      .attr('y', centerY + (size * 25) + 20) // Adjust the position based on your preference
+      .text(`Neurons: ${size}`)
+      .attr('text-anchor', 'middle');
+  }
+
+    }
+    
+
+  const calcPrefixNodes = (size, index) => {
+    if (size - index > 3 && index == 0) {
+      return 3;
+    }
+    if (size - index > 2 && index == 1) {
+      return 2;
+    }
+    if (size - index > 1 && index == 2) {
+      return 1;
+    }
+    return 1;
+  }
+
+  const addLayer = () => {
+    console.log('adding');
+  }
+
+  return (
+    <div>
+      {/* <Center> */}
+      
+      {/* </Center> */}
+      <svg ref={svgRef}  width={'400'} height={'400'}/>
+      <Flex gap={'4px'}>
+      <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
+      <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
+      </Flex>
+    </div>
+  );
 };
-
-export default NeuralNetwork;

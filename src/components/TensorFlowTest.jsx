@@ -1,21 +1,19 @@
 import * as mobilenetmodule from '@tensorflow-models/mobilenet'
-import { Text, Button, Box } from '@chakra-ui/react'
+import { Text, Button, Box, Flex } from '@chakra-ui/react'
 import { useState, useEffect, useRef } from 'react';
 import * as tf from '@tensorflow/tfjs'
 import * as tfvis from '@tensorflow/tfjs-vis'
 
-export default function TensorFlowTest( {testImage, classes, trainingData, updateTrainingData} ) {
+export default function TensorFlowTest({ testImage, classes, trainingData, model, updateModel, updateActivations }) {
     //useeffect hook for async funcs
     const [predictions, setPredictions] = useState('No prediction');
-    const [model, setModel] = useState();
     const MOBILE_NET_INPUT_WIDTH = 224;
     const MOBILE_NET_INPUT_HEIGHT = 224;
-    // classes = ['Class 1', 'Class 2'];
     
     const [trainingDataInputs, setTrainingDataInputs] = useState([]);
     const [trainingDataOutputs, setTrainingDataOutputs] = useState([]);
     const mobilenetRef = useRef(null);
-    // const [mobilenetModel, setMobilenetModel] = useState();
+    const [modelLoaded, setModelLoaded] = useState(false);
     
     useEffect(() => {
         (async() => {
@@ -30,6 +28,17 @@ export default function TensorFlowTest( {testImage, classes, trainingData, updat
             }
         })();
     }, [])
+
+
+    const getActivations =  (input, model, layer) => {
+        const activationModel = tf.model({
+          inputs: model.input,
+          outputs: layer.output
+        });
+        return activationModel.predict(input);
+      }
+
+    
     const predict = async () => {
         if (!model || !mobilenetRef.current) {
             if (!model) {
@@ -50,24 +59,27 @@ export default function TensorFlowTest( {testImage, classes, trainingData, updat
             img.src = imgPath;
 
           });
-        // img.width = 250;
-        // img.height = 250;
-        // console.log(img);
-        // let predictions = await model.classify(img);
-        // setPredictions(predictions[0].className)
-        // console.log(predictions);
 
         tf.tidy(function() {
             let imageTensor = tf.browser.fromPixels(img).div(255);
             let resizedTensor = tf.image.resizeBilinear(imageTensor, [MOBILE_NET_INPUT_HEIGHT, MOBILE_NET_INPUT_WIDTH], true);
+
+            // let reshapedTensor = imageTensor.reshape([1, MOBILE_NET_INPUT_HEIGHT, MOBILE_NET_INPUT_WIDTH, 3]);
+            // let resizedTensor = tf.image.resizeBilinear(reshapedTensor, [MOBILE_NET_INPUT_HEIGHT, MOBILE_NET_INPUT_WIDTH], true);
+
             let imageFeatures = mobilenetRef.current.predict(resizedTensor.expandDims());
             let prediction = model.predict(imageFeatures).squeeze();
             let highestIndex = prediction.argMax().arraySync();
             let predictionArray = prediction.arraySync();
+            setPredictions(classes[highestIndex]);
 
-            setPredictions(predictionArray);
+            const layer = model.getLayer('activationLayer');
+            const activations = getActivations(imageFeatures, model, layer);
+            console.log('Activations: ', activations);
+            updateActivations(activations);
         })
-    
+
+        
     }
 
     const loadModel = async() => {
@@ -88,16 +100,25 @@ export default function TensorFlowTest( {testImage, classes, trainingData, updat
         });
 
         let modelHead = tf.sequential();
-        modelHead.add(tf.layers.dense({inputShape: [1024], units: 128, activation: 'relu'}));
+        modelHead.add(tf.layers.dense({inputShape: [1024], units: 128, activation: 'relu', name: 'activationLayer'}));
         modelHead.add(tf.layers.dense({units: classes.length, activation: 'softmax'}));
 
-        modelHead.summary();
+
         modelHead.compile({
             optimizer: 'adam',
             loss: (classes.length === 2) ? 'binaryCrossentropy': 'categoricalCrossentropy'
         });
-        setModel(modelHead);
+        updateModel(modelHead);
+        modelHead.summary();
         gatherData();
+        setModelLoaded(true);
+        const layers = modelHead.layers;
+        console.log(layers[0].kernel.shape[0]);
+        console.log(layers[1].kernel.shape[0]);
+        console.log(layers[1].kernel.shape[1]);     
+        //if the thing is last layer, kernel.shape[0] for input, [1] for output   
+        // const surface = { name: 'Model Architecture', tab: 'Model' };
+        // tfvis.show.modelSummary(modelHead, surface);
     }
 
     const trainAndPredict = async() => {
@@ -156,14 +177,16 @@ export default function TensorFlowTest( {testImage, classes, trainingData, updat
     }
     
     return (
-        <div>
-            <Button onClick={() => loadModel()}>Load Mobilenet Model</Button>
+        <Flex direction={'column'} justifyContent={'center'} alignItems={'center'}>
+            <Text>Neural Network</Text>
+            <Text>{!modelLoaded ? 'Neural Network is not loaded' : 'Neural Network loaded!'}</Text>
+            <Button onClick={() => loadModel()}>{!modelLoaded ? 'Load' : 'Reload'} Mobilenet Model</Button>
+            
             <Button onClick={() => predict()}>Get prediction</Button>
             <Text>Prediction: {String(predictions)}</Text>
             {testImage ? testImage.src : "Image not found"}
-            <Box id='visualization-nn' width={'250px'} height={'250px'} backgroundColor={'gray'}>
-                <Button onClick={() => {console.log(trainingDataInputs); console.log(trainingDataOutputs)}} />
-            </Box>
-        </div>
+            <div id="activation-container"></div>
+
+        </Flex>
     )
 }
