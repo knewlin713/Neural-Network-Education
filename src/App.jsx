@@ -40,7 +40,7 @@ function App() {
   return (
     <div style={styles}>
       <ChakraProvider theme={theme}>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -49,7 +49,8 @@ function App() {
           <Route path="*" element={<NoPage />} />
           <Route path="playground" element={<Playground />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
+      <Home />
       </ChakraProvider>
       </div>
   )

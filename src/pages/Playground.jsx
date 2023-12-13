@@ -62,9 +62,6 @@ export default function Playground() {
     
     return(
         <div style={{ width: '100%'}}>
-            <Header />
-
-            <Heading color="white">Playground</Heading>
             <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
                 <Box >
                 <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
@@ -83,12 +80,13 @@ export default function Playground() {
                         overflow="hidden"
                         backgroundColor="#FAF9F6"
                         height="100%"
-                        width={'50%'}
+                        width={'100%'}
                         >
+                            <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
                             <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
                         </Box>
                     
-                        <Box
+                        {/* <Box
                         borderWidth="1px"
                         borderRadius="lg"
                         overflow="hidden"
@@ -96,8 +94,8 @@ export default function Playground() {
                         width={'50%'}
                         >
                             
-                            <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
-                        </Box>
+                            TENSORFLOWTEST WAS HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        </Box> */}
                     </Flex>
                     {/* <Spacer /> */}
                     <Flex width='25%' justify={'center'}> 
