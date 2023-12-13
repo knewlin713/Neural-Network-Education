@@ -1,7 +1,7 @@
 import Header from '../components/header';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
-import { Box, Flex, Spacer, Heading, Button, ButtonGroup } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Heading, Button, ButtonGroup, IconButton } from '@chakra-ui/react';
 import NeuralNetwork from '../components/NeuralNetwork';
 import ImageUploader from '../components/ImageUploader';
 import ClassManager from '../components/ClassManager';
@@ -19,7 +19,10 @@ export default function Playground() {
     const [model, setModel] = useState();
     const [activations, setActivations] = useState();
     //testImage: {classID: number, imagePath: string}
+    const [forceRerender, setForceRerender] = useState(false);
+
     const [trainingData, setTrainingData] = useState([
+        
         {classID: 0 , imagePath: 'src/trainingData/dog1.jpeg'},
         {classID: 0 , imagePath: 'src/trainingData/dog2.jpeg'},
         {classID: 0 , imagePath: 'src/trainingData/dog3.jpeg'},
@@ -40,6 +43,7 @@ export default function Playground() {
     }
 
     const updateClasses = (newClass) => {
+        console.log('Received Updated Classes:', newClass);
         setClasses(newClass);
     }
 
@@ -52,7 +56,8 @@ export default function Playground() {
     }
 
     const addClass = () => {
-        updateClasses([...classes, "Class " + classes.length]);
+        setClasses([...classes, "Class " + classes.length]);
+        setForceRerender((prev) => !prev);
     }
     
     return(
@@ -62,12 +67,12 @@ export default function Playground() {
             <Heading color="white">Playground</Heading>
             <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
                 <Box >
-                <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                 </Box>
 
                 <Flex align={'center'} justify={'flex-start'} width={'100%'} gap={'50px'} height={'100%'} >
                     {/* <Box width={'25%'}> */}
-                    <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                    <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                     {/* </Box> */}
                     {/* <Spacer /> */}
                     <Flex width={'25%'}>
@@ -97,14 +102,14 @@ export default function Playground() {
                     {/* <Spacer /> */}
                     <Flex width='25%' justify={'center'}> 
                     {classes[3] ?
-                     <ClassBox  classLabel={"Class 2"} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
-                     : <AddIcon backgroundColor={'white'} onClick={() => addClass()}/>}
+                     <ClassBox  classLabel={"Class 2"} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
+                     : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()}/>}
                     </Flex>
                 </Flex>
                 <Flex align={'center'} justify={'center'}>
                 {classes[2] ?
-                     <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
-                     : <AddIcon backgroundColor={'white'} marginTop={'100px'} marginBottom={'100px'} onClick={() => addClass()}/>}
+                     <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
+                     : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()} marginTop={'100px'} marginBottom={'100px'}/>}
                 </Flex>
             </Flex>
 
@@ -116,30 +121,3 @@ export default function Playground() {
         </div>
     )
 }
-
-
-
-            {/* <Flex className="center" alignItems="center">
-                <Box justifySelf={'center'} borderWidth='1px' borderRadius='lg' overflow='hidden'  backgroundColor="#FAF9F6" height="100%">
-                    <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
-                </Box>
-                <Box borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor="#FAF9F6" >
-                    <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
-                </Box>
-            </Flex>
-            <ClassBox  classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData}/> */}
-            
-            {/* <ClassManager className="positioned-element " classes={classes} updateClasses={updateClasses} trainingData={trainingData} updateTrainingData={updateTrainingData}/> */}
-            {/* <Flex>
-                <ClassManager classes={classes} updateClasses={updateClasses} trainingData={trainingData} updateTrainingData={updateTrainingData}/>
-                <Box maxWidth="10%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" height="100%">
-                    <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
-                </Box>
-                <Box maxWidth="33%" borderWidth='1px' borderRadius='lg' overflow='hidden' maxHeight="50%" backgroundColor="#FAF9F6" minHeight="100%">
-                    <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
-                </Box>
-                
-            </Flex>
-            <Box direction={'column'} justifyContent={'center'} alignItems={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6">
-                <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
-            </Box> */}

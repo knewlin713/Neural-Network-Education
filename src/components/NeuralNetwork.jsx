@@ -15,14 +15,15 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
   const secondRef = useRef(null);
   const [layerSizes, setLayerSizes] = useState([]);
   const [hiddenLayerSizes, setHiddenLayersSize] = useState([]);
+  const [connectionsData, setConnectionsData] = useState([]);
 
   const visualizeNeuralNetwork = async() => {
     const layers = model.layers;
     const inputLayerSize = layers[0].kernel.shape[0];
 
-    const weights = layers[0].getWeights()[0];
-    const weightMatrix = await weights.array();
-    console.log(weightMatrix);
+    // const weights = layers[0].getWeights()[0];
+    // const weightMatrix = await weights.array();
+    // console.log(weightMatrix);
     // Extract the sizes of hidden layers
     const hiddenLayersSizes = layers.slice(1).map((layer) => layer.kernel.shape[0]);
     setHiddenLayersSize(hiddenLayersSizes);
@@ -211,7 +212,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
 
     const weights = layers[0].getWeights()[0];
     const weightMatrix = await weights.array();
-    console.log(weightMatrix);
+    // console.log(weightMatrix[0]);
     // Extract the sizes of hidden layers
     const hiddenLayersSizes = layers.slice(1).map((layer) => layer.kernel.shape[0]);
     setHiddenLayersSize(hiddenLayersSizes);
@@ -241,7 +242,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     hiddenLayerSizes.forEach((size, i) => {
       detailedDraw(svg, (i + 2) * 100 , size, i + 1, "Hidden layer " + i);
     })
-    detailedDraw(svg, layerSizes.length * 100 ? layerSizes.length * 100 : 200, classes.length, classes.length, 'output layer');
+    detailedDraw(svg, layerSizes.length * 100 ? layerSizes.length * 100 : 200, classes.length, layerSizes.length, 'output layer');
     // svg.selectAll('*').each(function() {
     //   console.log(this);
     // });
@@ -249,8 +250,10 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
 
 
   }
+
   
-  const detailedDraw = (svg, x, size, index, layerName) => {
+  
+  const detailedDraw = async(svg, x, size, index, layerName) => {
     const svgHeight = (layerSizes[0]) * 50 + 100;
     const centerY = svgHeight / 2;
     // const maxNeurons = Math.max(...layerSizes);
@@ -260,7 +263,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     // const layer = svg.append('g');
 
     
-
+    
     const layerNameText = svg.append('g')
     .append('text')
     .attr('x', x)
@@ -280,6 +283,36 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     .attr("fill", 'blue')
     .attr('stroke', 'black')
 
+      // const layerWeights = weightMatrix[index];
+      // console.log(weightMatrix)
+      // return;
+      
+
+      //lines calculate and render
+      if (index != layerSizes.length) {
+        const weightsArray = model.layers[index].getWeights();
+        console.log(index);
+        console.log(weightsArray);
+        const weightMatrix = await weightsArray[0].array();
+        const sourceX = x;
+        for (let sourceNeuronIndex = 0; sourceNeuronIndex < size; sourceNeuronIndex++) {
+          for (let targetNeuronIndex = 0; targetNeuronIndex < weightMatrix[sourceNeuronIndex].length; targetNeuronIndex++) {
+            // console.log(sourceNeuronIndex, targetNeuronIndex);
+            const sourceY = 100 + sourceNeuronIndex * 50;
+            const targetY = 100 + targetNeuronIndex * 50;
+      
+            const weight = Math.abs(weightMatrix[sourceNeuronIndex][targetNeuronIndex]) * 2;
+            
+            svg.append('line')
+              .attr('x1', sourceX)
+              .attr('y1', sourceY)
+              .attr('x2', x + 100)
+              .attr('y2', targetY)
+              .attr('stroke', 'gray')
+              .attr('stroke-width', weight);
+          }
+        }
+    }
     const neuronLabel = svg.append('g')
     .append('text')
     .attr('x', x)
@@ -292,6 +325,8 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     .attr('x', x - 10)
     .attr('y', centerY + (size * 25) + 50)
     .text(`${size}`)
+
+
   }
 
 
@@ -321,7 +356,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
           <TabPanel>
             <svg ref={svgRef}/>
           </TabPanel>
-          <TabPanel>
+          <TabPanel _loading={'lazy'}>
             <div ref={secondRef}/>
           </TabPanel>
         </TabPanels>
