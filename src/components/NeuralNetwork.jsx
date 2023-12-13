@@ -5,6 +5,7 @@ import { useState } from 'react';
 import {select} from 'd3'
 import {Flex, Center} from '@chakra-ui/react'
 import { layer } from '@tensorflow/tfjs-vis/dist/show/model';
+import * as tf from '@tensorflow/tfjs'
 
 
 export default function NeuralNetwork({ model, updateModel, activations, classes }) {
@@ -29,7 +30,9 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     // const svgWidth = 100 + layerSizes.length * 150; // Adjust the multiplier based on your preferences
     // const svgHeight = 2 * maxNeurons * 25;
     console.log(layerSizes);
-    const svg = d3.select(svgRef.current)
+    const svgWidth = (layerSizes.length + 1) * 100;
+    const height = (calcPrefixNodes(layerSizes[0], 0) * 2) * 75;
+    const svg = d3.select(svgRef.current).attr('width', svgWidth).attr('height', height)
     svg.selectAll('*').remove();
 
     drawLayer(svg, 100, inputLayerSize, 0, "input layer");
@@ -60,6 +63,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
       .text(layerName)
       .attr('text-anchor', 'middle')
       .attr('font-weight', 'bold');
+      //solve with line break just like i did with neuron size
 
       const nodesBefore = svg.append('g')
       .selectAll("circle")
@@ -91,12 +95,18 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
       .attr("fill", 'blue')
       .attr('stroke', 'black')
 
-      const neuronSize = svg.append('g')
+      const neuronLabel = svg.append('g')
       .append('text')
       .attr('x', x)
       .attr('y', centerY + (pre * 50) + 50) // Adjust the position based on your preference
-      .text(`Neurons: ${size}`)
+      .text(`Neurons:`)
       .attr('text-anchor', 'middle');
+
+      const neuronSize = svg.append('g')
+      .append('text')
+      .attr('x', x - 15)
+      .attr('y', centerY + (pre * 50) + 75)
+      .text(`${size}`)
 
     } else {
       const layerNameText = svg.append('g')
@@ -117,12 +127,18 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
       .attr("fill", 'blue')
       .attr('stroke', 'black')
 
-      const neuronSize = svg.append('g')
+      const neuronLabel = svg.append('g')
       .append('text')
       .attr('x', x)
       .attr('y', centerY + (size * 25) + 20) // Adjust the position based on your preference
-      .text(`Neurons: ${size}`)
+      .text(`Neurons:`)
       .attr('text-anchor', 'middle');
+
+      const neuronSize = svg.append('g')
+      .append('text')
+      .attr('x', x - 10)
+      .attr('y', centerY + (size * 25) + 40)
+      .text(`${size}`)
   }
 
     }
@@ -143,6 +159,15 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
 
   const addLayer = () => {
     console.log('adding');
+    const secondToLastIndex = layerSizes.length - 2;
+    const newLayer = tf.layers.dense({ units: Math.round(layerSizes[secondToLastIndex] / 2), activation: 'relu', name: 'Hidden layer ' + hiddenLayerSizes.length - 1})
+    let newModel = tf.sequential();
+    for (let i = 0; i < secondToLastIndex; i++) {
+      newModel.add(model.layers[i]);
+    }
+    newModel.add(newLayer);
+    newModel.add(tf.layers.dense({units: classes.length, activation: 'softmax'}));
+    updateModel(newModel);
   }
 
   return (
@@ -150,7 +175,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
       {/* <Center> */}
       
       {/* </Center> */}
-      <svg ref={svgRef}  width={'400'} height={'400'}/>
+      <svg ref={svgRef} />
       <Flex gap={'4px'}>
       <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
       <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
