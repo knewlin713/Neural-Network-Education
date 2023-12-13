@@ -6,29 +6,30 @@ import {select} from 'd3'
 import {Flex, Center} from '@chakra-ui/react'
 import { layer } from '@tensorflow/tfjs-vis/dist/show/model';
 import * as tf from '@tensorflow/tfjs'
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+
 
 
 export default function NeuralNetwork({ model, updateModel, activations, classes }) {
   const svgRef = useRef(null);
+  const secondRef = useRef(null);
   const [layerSizes, setLayerSizes] = useState([]);
   const [hiddenLayerSizes, setHiddenLayersSize] = useState([]);
-  // useEffect(() => {
-  //   const svg = select(svgRef.current).attr('height', 400).attr('width', 800);
 
-  // }, [])
-  const visualizeNeuralNetwork = () => {
+  const visualizeNeuralNetwork = async() => {
     const layers = model.layers;
     const inputLayerSize = layers[0].kernel.shape[0];
 
+    const weights = layers[0].getWeights()[0];
+    const weightMatrix = await weights.array();
+    console.log(weightMatrix);
     // Extract the sizes of hidden layers
     const hiddenLayersSizes = layers.slice(1).map((layer) => layer.kernel.shape[0]);
     setHiddenLayersSize(hiddenLayersSizes);
 
     // Create an array to represent the layer sizes including input and output layers
     setLayerSizes([inputLayerSize, ...hiddenLayersSizes, classes.length]);
-    // const maxNeurons = Math.max(...layerSizes);
-    // const svgWidth = 100 + layerSizes.length * 150; // Adjust the multiplier based on your preferences
-    // const svgHeight = 2 * maxNeurons * 25;
+
     console.log(layerSizes);
     const svgWidth = (layerSizes.length + 1) * 100;
     const height = (calcPrefixNodes(layerSizes[0], 0) * 2) * 75;
@@ -157,6 +158,143 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     return 1;
   }
 
+  const heatMapWeights = async() => {
+      // Get the weights of the specified layer
+      const layer = model.layers[0];
+      const weights = layer.getWeights()[0]; // Assuming it's the first weight (e.g., kernel)
+
+      // Assuming a 2D weight matrix (e.g., for a dense layer)
+      const weightMatrix = await weights.array();
+
+      // Determine the dimensions of the weight matrix
+      const numRows = weightMatrix.length;
+      const numCols = weightMatrix[0].length;
+
+      // Set up SVG
+      const svg = d3.select(secondRef.current);
+      svg.selectAll('*').remove();
+
+      // Create a color scale for the heatmap
+      const colorScale = d3.scaleSequential(d3.interpolateViridis).domain([-1, 1]);
+
+      // Set the size of each cell in the heatmap
+      const cellSize = 20;
+
+      // Draw the heatmap
+      svg
+        .selectAll('circle')
+        .data(weightMatrix.flat())
+        .enter()
+        .append('rect')
+        .attr('x', (d, i) => (i % numCols) * cellSize)
+        .attr('y', (d, i) => Math.floor(i / numCols) * cellSize)
+        .attr('width', cellSize)
+        .attr('height', cellSize)
+        .attr('fill', (d) => colorScale(d));
+
+      // Add labels (optional)
+      svg
+        .selectAll('text')
+        .data(weightMatrix.flat())
+        .enter()
+        .append('text')
+        .text((d) => d.toFixed(2))
+        .attr('x', (d, i) => (i % numCols) * cellSize + cellSize / 2)
+        .attr('y', (d, i) => Math.floor(i / numCols) * cellSize + cellSize / 2)
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle');
+    };
+
+  const detailedNNViz = async() => {
+    const layers = model.layers;
+    const inputLayerSize = layers[0].kernel.shape[0];
+
+    const weights = layers[0].getWeights()[0];
+    const weightMatrix = await weights.array();
+    console.log(weightMatrix);
+    // Extract the sizes of hidden layers
+    const hiddenLayersSizes = layers.slice(1).map((layer) => layer.kernel.shape[0]);
+    setHiddenLayersSize(hiddenLayersSizes);
+
+    // Create an array to represent the layer sizes including input and output layers
+    setLayerSizes([inputLayerSize, ...hiddenLayersSizes, classes.length]);
+
+    console.log(layerSizes);
+    const svgWidth = (layerSizes.length + 1) * 100;
+    const height = (layerSizes[0]) * 50 + 100;
+    const container = d3.select(secondRef.current)
+      .style('height', height) // Set the height based on your preference
+      .style('overflow-y', 'scroll')
+
+    let svg = container.append('svg')
+    // .attr('width', svgWidth).attr('height', height);
+
+    if (!svg.empty()) {
+      // If the SVG element doesn't exist, create a new one
+      container.selectAll('*').remove();
+    } 
+      // If the SVG element already exists, clear its contents
+      svg = container.append('svg').attr('width', svgWidth).attr('height', height);
+    // svg.selectAll('*').remove();
+    // svg.append('text').attr('x', 100).attr('y', 100).text('hi');
+    detailedDraw(svg, 100, inputLayerSize, 0, "input layer");
+    hiddenLayerSizes.forEach((size, i) => {
+      detailedDraw(svg, (i + 2) * 100 , size, i + 1, "Hidden layer " + i);
+    })
+    detailedDraw(svg, layerSizes.length * 100 ? layerSizes.length * 100 : 200, classes.length, classes.length, 'output layer');
+    // svg.selectAll('*').each(function() {
+    //   console.log(this);
+    // });
+    // console.log(height);
+
+
+  }
+  
+  const detailedDraw = (svg, x, size, index, layerName) => {
+    const svgHeight = (layerSizes[0]) * 50 + 100;
+    const centerY = svgHeight / 2;
+    // const maxNeurons = Math.max(...layerSizes);
+    // const svgHeight = 2 * maxNeurons * 25;
+
+    // svg.selectAll('*').remove();
+    // const layer = svg.append('g');
+
+    
+
+    const layerNameText = svg.append('g')
+    .append('text')
+    .attr('x', x)
+    .attr('y', centerY - (size * 25))
+    .text(layerName)
+    .attr('text-anchor', 'middle')
+    .attr('font-weight', 'bold');
+
+    const layer = svg.append('g')
+    .selectAll("circle")
+    .data(d3.range(size))
+    .enter()
+    .append("circle")
+    .attr("cx", x)
+    .attr("cy", (data) => 100 + data * 50)
+    .attr("r", 15)
+    .attr("fill", 'blue')
+    .attr('stroke', 'black')
+
+    const neuronLabel = svg.append('g')
+    .append('text')
+    .attr('x', x)
+    .attr('y', centerY + (size * 25) + 30) // Adjust the position based on your preference
+    .text(`Neurons:`)
+    .attr('text-anchor', 'middle');
+
+    const neuronSize = svg.append('g')
+    .append('text')
+    .attr('x', x - 10)
+    .attr('y', centerY + (size * 25) + 50)
+    .text(`${size}`)
+  }
+
+
   const addLayer = () => {
     console.log('adding');
     const secondToLastIndex = layerSizes.length - 2;
@@ -172,14 +310,31 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
 
   return (
     <div>
-      {/* <Center> */}
+      <Flex>
+      <Tabs>
+        <TabList>
+          <Tab>Overall Structure</Tab>
+          <Tab>Detailed View</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <svg ref={svgRef}/>
+          </TabPanel>
+          <TabPanel>
+            <div ref={secondRef}/>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+      {/* <svg ref={svgRef} /> */}
       
-      {/* </Center> */}
-      <svg ref={svgRef} />
       <Flex gap={'4px'}>
       <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
+      <Button onClick={() => detailedNNViz()}>Detailed Draw</Button>
       <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
+      </Flex>
       </Flex>
     </div>
   );
 };
+
