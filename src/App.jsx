@@ -17,7 +17,7 @@ function App() {
   const styles = {
     // backgroundImage: `url(${backgroundImage})`, // Set your background image here
     // backgroundSize: 'cover',
-    backgroundColor: '#2D2D2D', // Set your desired background color here
+    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.90), rgb(63, 61, 61))', // Set your desired background color here
     minHeight: '100vh', // Ensures the background color covers the entire viewport height
   };
   const theme = extendTheme({

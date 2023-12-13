@@ -10,6 +10,7 @@ import TensorFlowTest from '../components/TensorFlowTest';
 import { train } from '@tensorflow/tfjs';
 import './Playground.css'
 import ClassBox from '../components/ClassBox';
+import { AddIcon } from '@chakra-ui/icons';
 
 export default function Playground() {
     const [testImageIndex, setTestImageIndex] = useState(-1);
@@ -49,40 +50,74 @@ export default function Playground() {
     const updateActivations = (newActivation) => {
         setActivations(newActivation);
     }
+
+    const addClass = () => {
+        updateClasses([...classes, "Class " + classes.length]);
+    }
     
     return(
-        <div>
+        <div style={{ width: '100%'}}>
             <Header />
 
             <Heading color="white">Playground</Heading>
-            <Flex className="center" alignItems="center" flexDirection="column">
-                <ClassBox  classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
-                <Flex>
-                    <ClassBox  classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
-                    <Box
-                    justifySelf="center"
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    overflow="hidden"
-                    backgroundColor="#FAF9F6"
-                    height="100%"
-                    >
-                        <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
-                    </Box>
-                    <Box
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    overflow="hidden"
-                    backgroundColor="#FAF9F6"
-                    >
-                        <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
-                    </Box>
-                    <ClassBox  classLabel={"Class 2"} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+            <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
+                <Box >
+                <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                </Box>
+
+                <Flex align={'center'} justify={'flex-start'} width={'100%'} gap={'50px'} height={'100%'} >
+                    {/* <Box width={'25%'}> */}
+                    <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                    {/* </Box> */}
+                    {/* <Spacer /> */}
+                    <Flex width={'25%'}>
+                        <Box
+                        justifySelf="center"
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        overflow="hidden"
+                        backgroundColor="#FAF9F6"
+                        height="100%"
+                        width={'50%'}
+                        >
+                            <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
+                        </Box>
                     
+                        <Box
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        overflow="hidden"
+                        backgroundColor="#FAF9F6"
+                        width={'50%'}
+                        >
+                            
+                            <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
+                        </Box>
+                    </Flex>
+                    {/* <Spacer /> */}
+                    <Flex width='25%' justify={'center'}> 
+                    {classes[3] ?
+                     <ClassBox  classLabel={"Class 2"} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                     : <AddIcon backgroundColor={'white'} onClick={() => addClass()}/>}
+                    </Flex>
                 </Flex>
-                <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
-                
+                <Flex align={'center'} justify={'center'}>
+                {classes[2] ?
+                     <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData}/> 
+                     : <AddIcon backgroundColor={'white'} marginTop={'100px'} marginBottom={'100px'} onClick={() => addClass()}/>}
+                </Flex>
             </Flex>
+
+            <Box direction={'column'} justifyContent={'center'} alignItems={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6">
+                <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
+            </Box>
+            
+
+        </div>
+    )
+}
+
+
 
             {/* <Flex className="center" alignItems="center">
                 <Box justifySelf={'center'} borderWidth='1px' borderRadius='lg' overflow='hidden'  backgroundColor="#FAF9F6" height="100%">
@@ -108,6 +143,3 @@ export default function Playground() {
             <Box direction={'column'} justifyContent={'center'} alignItems={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6">
                 <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
             </Box> */}
-        </div>
-    )
-}
