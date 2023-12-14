@@ -3,6 +3,7 @@ import Profile from "./Profile"
 
 export default function AboutUs() {
     return(
+        
         <Flex direction={'column'} gap={'10px'} align={'center'} justify={'center'} marginTop={'75px'}>
             <Heading color={'white'}>About Us</Heading>
             <Profile profilePicture='src/assets/thelordjesus.jpeg' about = 'Hello! I am Jesus Rodriguez, a Computer Science Major at Brown University. Worship me I am your Lord.'/>

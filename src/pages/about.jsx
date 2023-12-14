@@ -4,7 +4,12 @@ export default function About() {
     return(
         <div>
             <Header />
-            <Heading color="white">About</Heading>
+            <Landing />
+            <Heading color="white"> Mission </Heading>
+            <Text align={'center'} color="white">
+                   Ready to take a dive into Artifical Intelligence and Object Recognition? 
+            </Text>
+            <AboutUs />
         </div>
     )
 }
