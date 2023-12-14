@@ -1,5 +1,5 @@
 import * as mobilenetmodule from '@tensorflow-models/mobilenet'
-import { Text, Button, Box, Flex } from '@chakra-ui/react'
+import { Text, Button, Box, Flex, Heading } from '@chakra-ui/react'
 import { useState, useEffect, useRef } from 'react';
 import * as tf from '@tensorflow/tfjs'
 import * as tfvis from '@tensorflow/tfjs-vis'
@@ -7,6 +7,7 @@ import * as tfvis from '@tensorflow/tfjs-vis'
 export default function TensorFlowTest({ testImage, classes, trainingData, model, updateModel, updateActivations }) {
     //useeffect hook for async funcs
     const [predictions, setPredictions] = useState('No prediction');
+    const [confidence, setConfidence] = useState("None");
     const MOBILE_NET_INPUT_WIDTH = 224;
     const MOBILE_NET_INPUT_HEIGHT = 224;
     
@@ -72,6 +73,7 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             let highestIndex = prediction.argMax().arraySync();
             let predictionArray = prediction.arraySync();
             setPredictions(classes[highestIndex]);
+            setConfidence(Math.round((predictionArray[highestIndex] * 100)) + '%');
 
             const layer = model.getLayer('activationLayer');
             const activations = getActivations(imageFeatures, model, layer);
@@ -113,41 +115,41 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
         gatherData();
         setModelLoaded(true);
         const layers = modelHead.layers;
-        console.log(layers[0].kernel.shape[0]);
-        console.log(layers[1].kernel.shape[0]);
-        console.log(layers[1].kernel.shape[1]);     
+        train();
         //if the thing is last layer, kernel.shape[0] for input, [1] for output   
         // const surface = { name: 'Model Architecture', tab: 'Model' };
         // tfvis.show.modelSummary(modelHead, surface);
     }
 
-    const trainAndPredict = async() => {
+    const train = async() => {
         //I will have uploaded images with image uploader. Every image uploaded will be put in a 
         //trainingdata object. It will have classes and each class has images array. Convert each image to tensor and train
         
         //this will train with a preset array
+        console.log(trainingDataInputs);
+
         tf.util.shuffleCombo(trainingDataInputs, trainingDataOutputs);
         let outputsAsTensor = tf.tensor1d(trainingDataOutputs, 'int32');
-        let oneHotOutputs = tf.oneHot(outputsAsTensor, CLASS_NAMES.length);
+        let oneHotOutputs = tf.oneHot(outputsAsTensor, classes.length);
         let inputsAsTensor = tf.stack(trainingDataInputs);
 
         let results = await model.fit(inputsAsTensor, oneHotOutputs, {shuffle: true, batchSize: 5, epochs: 10, 
         callbacks: {onEpochEnd: logProgress}});
         outputsAsTensor.dispose();
         inputsAsTensor.dispose();
-            
+        console.log(inputsAsTensor);
         //predict loop
 
     }   
     
     //if the above training goes correctly, this is where the neural network visualizer occurs
     const logProgress = (epoch, logs) => {
-        console.log('Epoch:' + epoch + 'logs: ' + logs);
+        console.log('Epoch:' + epoch + 'logs:' +  logs.loss);
     }
 
     const gatherData = async() => {
-        const inputs = [];
-        const outputs = [];
+        let inputs = [];
+        let outputs = [];
 
         //training data is array of objects {classID: number, image: HTMLImageElement}
         for (let i = 0; i < trainingData.length; i++) {
@@ -160,7 +162,7 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             await new Promise(resolve => {
                 image.onload = resolve;
               });
-            console.log(image);
+            console.log(trainingData);
             let currClassID = trainingData[i].classID;
             let imageFeatures = tf.tidy(function() {
                 let imageTensor = tf.browser.fromPixels(image);
@@ -168,6 +170,7 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
                 let normalizedTensor = resizedTensor.div(255);
                 return mobilenetRef.current.predict(normalizedTensor.expandDims()).squeeze();
             })
+            console.log(imageFeatures);
             inputs.push(imageFeatures);
             outputs.push(currClassID);
         }
@@ -178,13 +181,15 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
     
     return (
         <Flex direction={'column'} justifyContent={'center'} alignItems={'center'}>
-            <Text>Neural Network</Text>
+            <Heading size={'lg'}>Neural Network</Heading>
             <Text>{!modelLoaded ? 'Neural Network is not loaded' : 'Neural Network loaded!'}</Text>
-            <Button onClick={() => loadModel()}>{!modelLoaded ? 'Load' : 'Reload'} Mobilenet Model</Button>
+            <Button onClick={() => loadModel()}>Train model</Button>
             
             <Button onClick={() => predict()}>Get prediction</Button>
-            <Text>Prediction: {String(predictions)}</Text>
-            {testImage ? testImage.src : "Image not found"}
+            <Text>Prediction: {predictions}</Text>
+            <Text>Confidence: {confidence}</Text>
+            
+            {/* {testImage ? testImage.src : "Image not found"} */}
             <div id="activation-container"></div>
 
         </Flex>

@@ -70,17 +70,18 @@ export default function ImageUploader({ testImageIndex, images, updateTestImageI
 
     return (
     <div>
-      <Flex height='250px' widht='250px' alignItems={'center'} justifyContent={'center'}> 
-        {testImageIndex != -1 ? <Image src={images[testImageIndex].src}/> : <Text>No Image Selected </Text>}
+      <Flex height='375px' width='375px' align={'center'} justify={'center'} overflowX={'auto'}> 
+        {testImageIndex != -1 ? <Image src={images[testImageIndex].src} aspectRatio={'1'}/> : <Text>Upload image to test <br />your neural network! </Text>}
       </Flex>
       <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <Grid templateColumns="repeat(3, 1fr)" gap={6} overflowX={'auto'} wrap={'wrap'} height={'150px'}>
       {/* <div className="imageBox"> */}
         {images.map((image, index) => (
           //below code uses ternary operator to see if the image is the correct image type
           <Image src={image.src} alt={image + ' ' + index} boxSize='250px, 250px' objectFit='cover'  key={index}
             onClick={() => handleImageClick(image, index)}
             border={image.highlighted ? '2px solid blue' : '2px solid transparent'}
+            padding={'1'} borderRadius={'10px'} aspectRatio={'1'}
             // boxShadow={image.highlighted ? '0 0 10px rgba(0, 0, 255, 0.5)' : 'none'}
 
           />

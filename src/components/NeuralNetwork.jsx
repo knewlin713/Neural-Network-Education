@@ -17,6 +17,27 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
   const [hiddenLayerSizes, setHiddenLayersSize] = useState([]);
   const [connectionsData, setConnectionsData] = useState([]);
 
+  useEffect(() => {
+    // Render the graph and detailed view when the component mounts
+    const initialize = async () => {
+      try {
+        await tf.ready(); // Wait for TensorFlow to be ready
+        if (!model) {
+          console.warn('Model is not available yet.');
+          return;
+        }
+
+        console.log('Initializing visualization...');
+        await visualizeNeuralNetwork();
+        await detailedNNViz();
+        console.log('Visualization complete.');
+      } catch (error) {
+        console.error('Error during initialization:', error);
+      }
+    };
+    initialize();
+  }, [model]);
+
   const visualizeNeuralNetwork = async() => {
     const layers = model.layers;
     const inputLayerSize = layers[0].kernel.shape[0];
@@ -262,6 +283,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
     // svg.selectAll('*').remove();
     // const layer = svg.append('g');
 
+    ;
     
     
     const layerNameText = svg.append('g')
@@ -344,10 +366,38 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
   }
 
   return (
-    <div>
+    // <div>
+    //   <Flex>
+    //   <Tabs>
+    //     <TabList>
+    //       <Tab>Overall Structure</Tab>
+    //       <Tab>Detailed View</Tab>
+    //     </TabList>
+
+    //     <TabPanels>
+    //       <TabPanel>
+    //         <svg ref={svgRef}/>
+    //       </TabPanel>
+    //       <TabPanel _loading={'lazy'}>
+    //         <div ref={secondRef}/>
+    //       </TabPanel>
+    //     </TabPanels>
+    //   </Tabs>
+    //   {/* <svg ref={svgRef} /> */}
+      
+    //   <Flex gap={'4px'}>
+    //   <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
+    //   <Button onClick={() => detailedNNViz()}>Detailed Draw</Button>
+    //   <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
+    //   </Flex>
+    //   </Flex>
+
+      <div>
+    {model ? (
       <Flex>
-      <Tabs>
-        <TabList>
+        <Tabs>
+          {/* ... (your existing code) ... */}
+          <TabList>
           <Tab>Overall Structure</Tab>
           <Tab>Detailed View</Tab>
         </TabList>
@@ -360,15 +410,17 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
             <div ref={secondRef}/>
           </TabPanel>
         </TabPanels>
-      </Tabs>
-      {/* <svg ref={svgRef} /> */}
-      
-      <Flex gap={'4px'}>
-      <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
-      <Button onClick={() => detailedNNViz()}>Detailed Draw</Button>
-      <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
+        </Tabs>
+        <Flex gap={'4px'}>
+          <Button onClick={() => visualizeNeuralNetwork()}>Graph</Button>
+          <Button onClick={() => detailedNNViz()}>Detailed Draw</Button>
+          <Button onClick={() => addLayer()}>Add Hidden Layer</Button>
+        </Flex>
       </Flex>
-      </Flex>
+    ) : (
+      <p>Loading or no model available.</p>
+    )}
+  {/* </div> */}
     </div>
   );
 };

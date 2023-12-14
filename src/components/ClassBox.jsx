@@ -3,6 +3,7 @@ import { EditIcon, AddIcon } from '@chakra-ui/icons';
 import { useState, useRef } from 'react'; 
 import { Add } from '@tensorflow/tfjs';
 
+
 export default function ClassBox({ classes, classLabel, updateClasses, index, trainingData, updateTrainingData }) {
   const [editMode, setEditMode] = useState(false);
   const [value, setValue] = useState('');
@@ -45,8 +46,8 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
     
     return(
         <Flex direction={'column'} borderWidth="1px" borderRadius="lg" backgroundColor="white" width="500px" height="100%" gap={'10px'} margin={'10px   '}>
-        <Flex direction={'row'} justifyContent="center" >
-        <Text >{className}</Text>
+        <Flex direction={'row'} justify={'center'} align={'center'} >
+        <Text  as='b'>{className}</Text>
         {editMode ? (
           <>
           
@@ -63,7 +64,7 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
           <EditIcon justifySelf={'center'} alignSelf={'center'} marginLeft={'10px'} cursor={"grab"} onClick={() => setEditMode(true)}/>
         )}
         </Flex>
-        <Divider orientation='horizontal'/>
+        <Divider orientation='horizontal' borderColor="black"  marginTop={'-5px'} marginBottom={'-5px'}/>
         {/* Image upload stuff below */}
         <Input
         type="file"
@@ -73,30 +74,26 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
         onChange={(e) => handleImageUpload(e)}
       />
         {/* <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/> */}
-        <Text>Training Images</Text>
+        <Text paddingLeft={'1em'}>Training Images</Text>
         
-        <Grid templateColumns="repeat(4, 1fr)" gap={6} overflowY={'auto'} width={'500'} height={'184'}>
-          {trainingData.filter(datapoint => datapoint.classID === index).map((dataPoint, index) => (
-            <Image src={dataPoint.imagePath} key={index} width="100%" height="50%" objectFit="cover"/>
-          ))}
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            width="100%"
-            height="50%"
-          >
+        <Flex gap={1} overflowX={'scroll'} width={'500'} height={'100'} margin={'10px'}>
+        
             <IconButton
               onClick={() => handleRefClick()}
               cursor="pointer"
               icon={<AddIcon />}
               size={'lg'}
-              marginRight={'15px'}
-              width={'50%'}
-              height={'50%'}
+              width={'20%'}
+              height={'100%'}
             />
-          </Box>
-        </Grid>
+            <Flex overflowX={'scroll'} >
+          {trainingData.filter(datapoint => datapoint.classID === index).map((dataPoint, index) => (
+            <Image src={dataPoint.imagePath} key={index} width="100%" height="100%" objectFit="cover" padding={'1'} borderRadius={'10px'} aspectRatio={'1'} />
+          ))}
+          </Flex>
+          
+        </Flex>
       </Flex>
     )
 }
+

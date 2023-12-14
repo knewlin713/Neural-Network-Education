@@ -1,18 +1,21 @@
 import { Heading, Flex, Image, Text, Button } from '@chakra-ui/react'
+import { forwardRef } from 'react';
 
-const scrollToOffset = () => {
-      const offset = 1000; 
-      window.scrollTo({ top: offset, behavior: 'smooth' });
-  };
 
-export default function Landing() {
+const Landing = forwardRef(({playgroundRef}, ref) =>  {
+    const traverseToProject = () => {
+        playgroundRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+    }
     return(
         <div>
-            <Flex  borderTop="5px solid" borderBottom="1px solid" p={2} color="#FAF9F6" 
+            {/* <Flex  borderTop="5px solid" borderBottom="1px solid" p={2} color="#FAF9F6" 
                  alignItems="center" justifyContent="center" >
-                </Flex>
-            <Flex  borderTop="3px solid" borderBottom="1px solid" p={6} color="#FAF9F6" 
-                 alignItems="center" justifyContent="center" >
+                </Flex> */}
+            <Flex   borderBottom="1px solid" p={6} color="#FAF9F6" 
+                 alignItems="center" justifyContent="center" ref={ref} >
                 </Flex>
             <Flex>
                 <Flex justify='center' align='center' className='left-side' direction={'column'} width={'45%'}>
@@ -20,7 +23,7 @@ export default function Landing() {
                     <Text align={'center'} color="white">
                    Ready to take a dive into Artifical Intelligence and Object Recognition?  <br />Try out our Playground!
                     </Text>
-                    <Button style={{ marginTop: '20px' }} onClick={scrollToOffset}>Check it out</Button>
+                    <Button style={{ marginTop: '20px' }} onClick={() => traverseToProject()}>Check it out</Button>
                 </Flex>
                 <Flex justify={'center'} align={'center'} width={'55%'} className='right-side'>
                     <Image src='src/assets/Untitled design (3).png' />
@@ -34,4 +37,6 @@ export default function Landing() {
                 </Flex>
         </div>
     )
-}
+})
+
+export default Landing
