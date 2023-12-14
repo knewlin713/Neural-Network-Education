@@ -46,7 +46,7 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
     return(
         <Flex direction={'column'} borderWidth="1px" borderRadius="lg" backgroundColor="white" width="500px" height="100%" gap={'10px'} margin={'10px   '}>
         <Flex direction={'row'} justifyContent="center" >
-        <Text >Class Name: {className}</Text>
+        <Text >{className}</Text>
         {editMode ? (
           <>
           
@@ -75,16 +75,16 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
         {/* <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/> */}
         <Text>Training Images</Text>
         
-        <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+        <Grid templateColumns="repeat(4, 1fr)" gap={6} overflowY={'auto'} width={'500'} height={'184'}>
           {trainingData.filter(datapoint => datapoint.classID === index).map((dataPoint, index) => (
-            <Image src={dataPoint.imagePath} key={index} width="100%" height="100%"/>
+            <Image src={dataPoint.imagePath} key={index} width="100%" height="50%" objectFit="cover"/>
           ))}
           <Box
             display="flex"
             alignItems="center"
             justifyContent="center"
             width="100%"
-            height="100%"
+            height="50%"
           >
             <IconButton
               onClick={() => handleRefClick()}
@@ -92,10 +92,11 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
               icon={<AddIcon />}
               size={'lg'}
               marginRight={'15px'}
+              width={'50%'}
+              height={'50%'}
             />
           </Box>
         </Grid>
-          
       </Flex>
     )
 }
