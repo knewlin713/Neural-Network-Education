@@ -74,7 +74,7 @@ export default function Playground() {
                     <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                     {/* </Box> */}
                     {/* <Spacer /> */}
-                    <Flex width={'25%'}>
+                    <Flex width={'25%'} direction={'column'}>
                         <Box
                         justifySelf="center"
                         borderWidth="1px"
@@ -85,6 +85,17 @@ export default function Playground() {
                         width={'100%'}
                         >
                             <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
+                            {/* <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/>  */}
+                        </Box>
+                        <Box
+                        justifySelf="center"
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        overflow="hidden"
+                        backgroundColor="#FAF9F6"
+                        height="100%"
+                        width={'100%'}
+                        >
                             <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
                         </Box>
                     

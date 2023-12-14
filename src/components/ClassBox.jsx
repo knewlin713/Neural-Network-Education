@@ -47,7 +47,7 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
     return(
         <Flex direction={'column'} borderWidth="1px" borderRadius="lg" backgroundColor="white" width="500px" height="100%" gap={'10px'} margin={'10px   '}>
         <Flex direction={'row'} justify={'center'} align={'center'} >
-        <Text as='b'>{className}</Text>
+        <Text  as='b'>{className}</Text>
         {editMode ? (
           <>
           
@@ -74,7 +74,7 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
         onChange={(e) => handleImageUpload(e)}
       />
         {/* <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/> */}
-        <Text>Training Images</Text>
+        <Text paddingLeft={'1em'}>Training Images</Text>
         
         <Flex gap={1} overflowX={'scroll'} width={'500'} height={'100'} margin={'10px'}>
         
