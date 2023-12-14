@@ -75,28 +75,21 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
         {/* <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/> */}
         <Text>Training Images</Text>
         
-        <Grid templateColumns="repeat(4, 1fr)" gap={6} overflowY={'auto'} width={'500'} height={'184'}>
-          {trainingData.filter(datapoint => datapoint.classID === index).map((dataPoint, index) => (
-            <Image src={dataPoint.imagePath} key={index} width="100%" height="50%" objectFit="cover"/>
-          ))}
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            width="100%"
-            height="50%"
-          >
+        <Flex gap={1} overflowX={'scroll'} width={'500'} height={'100'} margin={'10px'}>
+        
             <IconButton
               onClick={() => handleRefClick()}
               cursor="pointer"
               icon={<AddIcon />}
               size={'lg'}
-              marginRight={'15px'}
-              width={'50%'}
-              height={'50%'}
+              width={'100%'}
+              height={'100%'}
             />
-          </Box>
-        </Grid>
+          {trainingData.filter(datapoint => datapoint.classID === index).map((dataPoint, index) => (
+            <Image src={dataPoint.imagePath} key={index} width="100%" height="100%" objectFit="cover" padding={'1'} borderRadius={'10px'} aspectRatio={'1'} />
+          ))}
+          
+        </Flex>
       </Flex>
     )
 }
