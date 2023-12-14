@@ -62,7 +62,9 @@ export default function Playground() {
     
     return(
         <div style={{ width: '100%'}}>
+            
             <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
+                <Heading color="white">Playground</Heading>
                 <Box >
                 <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                 </Box>
