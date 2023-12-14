@@ -97,7 +97,6 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
             />
           </Box>
         </Grid>
-          
       </Flex>
     )
 }
