@@ -22,9 +22,9 @@ export default function Header() {
                 {/* <Heading size="md">Project Title</Heading> */}
                 <Button onClick={() => {handleHome()}}variant="link" color="#FAF9F6">Home</Button>
                 <Button onClick={() => {handlePlayground()}}variant="link" color="#FAF9F6">About Us</Button>
+                <Button onClick={() => {handleAbout()}}variant="link" color="#FAF9F6">Learn</Button>
                 <Button onClick={() => {handleAbout()}}variant="link" color="#FAF9F6">Playground</Button>
                 <Button onClick={() => {handleAbout()}}variant="link" color="#FAF9F6">FAQ</Button>
-                <Button onClick={() => {handleAbout()}}variant="link" color="#FAF9F6">Learn More</Button>
 
         </Flex>
         </Flex>
