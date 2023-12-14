@@ -8,3 +8,4 @@ export default function About() {
         </div>
     )
 }
+//our mission should go before the about pages and maybe the click me

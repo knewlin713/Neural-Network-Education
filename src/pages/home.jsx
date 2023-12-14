@@ -19,3 +19,4 @@ export default function Home(){
         </div>
     )
 }
+//maybe remove about us an descibe nueural networks a bit with a blurb and such

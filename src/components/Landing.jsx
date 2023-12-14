@@ -7,8 +7,7 @@ export default function Landing() {
                 <Flex justify='center' align='center' className='left-side' direction={'column'} width={'45%'}>
                     <Heading color="white">Neural Network Education</Heading>
                     <Text align={'center'} color="white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elite.Sed eget libero feugiat, faucibus
-                    libero id, scelerisque quam
+                   Ready to take a dive into Artifical Intelligence and Object Recognition? 
                     </Text>
                     <Button>Check it out</Button>
                 </Flex>
