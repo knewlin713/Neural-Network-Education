@@ -10,10 +10,19 @@ export default function Home(){
   
     return(
         <div>
+        <Header />
+        <div style={{ height: '100vh' }}>
             <Landing />
+        </div>
+        <div style={{ height: '100vh' }}>
             <Education />
-            <Playground />  
+        </div>
+        <div style={{ height: '200vh' }}>
+            <Playground />
+        </div>
+        <div style={{ height: '100vh' }}>
             <AboutUs />
+        </div>
         </div>
     )
 }

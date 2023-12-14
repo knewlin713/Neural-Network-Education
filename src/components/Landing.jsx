@@ -8,10 +8,10 @@ const scrollToOffset = () => {
 export default function Landing() {
     return(
         <div>
-            <Flex  borderTop="5px solid" borderBottom="1px solid" p={2} color="#FAF9F6" 
+            {/* <Flex  borderTop="5px solid" borderBottom="1px solid" p={2} color="#FAF9F6" 
                  alignItems="center" justifyContent="center" >
-                </Flex>
-            <Flex  borderTop="3px solid" borderBottom="1px solid" p={6} color="#FAF9F6" 
+                </Flex> */}
+            <Flex   borderBottom="1px solid" p={6} color="#FAF9F6" 
                  alignItems="center" justifyContent="center" >
                 </Flex>
             <Flex>

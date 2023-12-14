@@ -122,11 +122,12 @@ export default function Playground() {
                      <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                      : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()} marginTop={'100px'} marginBottom={'100px'}/>}
                 </Flex>
+                <Flex align={'center'} justify={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6" width={'95%'}>
+                <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
+            </Flex>
             </Flex>
 
-            <Box direction={'column'} justifyContent={'center'} alignItems={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6">
-                <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
-            </Box>
+           
             
 
         </div>
