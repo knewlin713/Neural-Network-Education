@@ -1,5 +1,5 @@
 import Header from '../components/header';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Box, Flex, Spacer, Heading, Button, ButtonGroup, IconButton } from '@chakra-ui/react';
 import NeuralNetwork from '../components/NeuralNetwork';
@@ -65,7 +65,7 @@ import { AddIcon } from '@chakra-ui/icons';
             
             <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
                 <Heading ref={ref} color="white">Playground</Heading>
-                <Box >
+                <Box>
                 <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                 </Box>
 
@@ -85,8 +85,9 @@ import { AddIcon } from '@chakra-ui/icons';
                         width={'100%'}
                         >
                             <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
+                            <Divider borderColor={'black'} padding={'2'}/>
                             {/* <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/>  */}
-                        </Box>
+                        {/* </Box>
                         <Box
                         justifySelf="center"
                         borderWidth="1px"
@@ -95,7 +96,7 @@ import { AddIcon } from '@chakra-ui/icons';
                         backgroundColor="#FAF9F6"
                         height="100%"
                         width={'100%'}
-                        >
+                        > */}
                             <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
                         </Box>
                     
@@ -122,9 +123,9 @@ import { AddIcon } from '@chakra-ui/icons';
                      <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                      : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()} marginTop={'100px'} marginBottom={'100px'}/>}
                 </Flex>
-                <Flex align={'center'} justify={'center'}  borderWidth='1px' borderRadius='lg'   backgroundColor="#FAF9F6" width={'95%'}>
-                <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
-            </Flex>
+                <Flex  borderWidth='1px' borderRadius='lg' backgroundColor="#FAF9F6" width={'95%'} height={'550px'} overflowY="auto">
+                    <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
+                </Flex>
             </Flex>
 
            

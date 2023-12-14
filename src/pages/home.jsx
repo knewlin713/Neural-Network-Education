@@ -10,9 +10,9 @@ import { useRef, forwardRef, createRef } from 'react';
 export default function Home(){
   
     const educationRef = createRef();
-    const playgroundRef = useRef(null);
-    const aboutusRef = useRef(null);
-    const landingRef = useRef(null);
+    const playgroundRef = createRef();
+    const aboutusRef = createRef();
+    const landingRef = createRef();
 
     
     return(
@@ -24,7 +24,7 @@ export default function Home(){
         <div style={{ height: '100vh' }}>
             <Education ref={educationRef}/>
         </div>
-        <div style={{ height: '200vh' }}>ref={}
+        <div style={{ height: '250vh' }}>ref={}
             <Playground ref={playgroundRef}/>
         </div>
         <div style={{ height: '100vh' }}>

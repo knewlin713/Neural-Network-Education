@@ -7,6 +7,7 @@ import * as tfvis from '@tensorflow/tfjs-vis'
 export default function TensorFlowTest({ testImage, classes, trainingData, model, updateModel, updateActivations }) {
     //useeffect hook for async funcs
     const [predictions, setPredictions] = useState('No prediction');
+    const [confidence, setConfidence] = useState("None");
     const MOBILE_NET_INPUT_WIDTH = 224;
     const MOBILE_NET_INPUT_HEIGHT = 224;
     
@@ -72,6 +73,7 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             let highestIndex = prediction.argMax().arraySync();
             let predictionArray = prediction.arraySync();
             setPredictions(classes[highestIndex]);
+            setConfidence(Math.round((predictionArray[highestIndex] * 100)) + '%');
 
             const layer = model.getLayer('activationLayer');
             const activations = getActivations(imageFeatures, model, layer);
@@ -172,11 +174,8 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             inputs.push(imageFeatures);
             outputs.push(currClassID);
         }
-        console.log(inputs);
-        console.log(outputs);
 
         setTrainingDataInputs(inputs);
-        console.log(inputs);
         setTrainingDataOutputs(outputs);
     }
     
@@ -187,8 +186,10 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             <Button onClick={() => loadModel()}>Train model</Button>
             
             <Button onClick={() => predict()}>Get prediction</Button>
-            <Text>Prediction: {String(predictions)}</Text>
-            {testImage ? testImage.src : "Image not found"}
+            <Text>Prediction: {predictions}</Text>
+            <Text>Confidence: {confidence}</Text>
+            
+            {/* {testImage ? testImage.src : "Image not found"} */}
             <div id="activation-container"></div>
 
         </Flex>
