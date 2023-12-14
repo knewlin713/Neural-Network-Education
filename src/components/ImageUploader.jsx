@@ -70,8 +70,8 @@ export default function ImageUploader({ testImageIndex, images, updateTestImageI
 
     return (
     <div>
-      <Flex height='250px' widht='250px' alignItems={'center'} justifyContent={'center'}> 
-        {testImageIndex != -1 ? <Image src={images[testImageIndex].src}/> : <Text>No Image Selected </Text>}
+      <Flex height='250px' widht='250px' align={'center'} justify={'center'}> 
+        {testImageIndex != -1 ? <Image src={images[testImageIndex].src}/> : <Text>Upload image to test <br />your neural network! </Text>}
       </Flex>
       <Input type="file" accept="image/*" onChange={(e) => {handleImageUpload(e)}}/>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>

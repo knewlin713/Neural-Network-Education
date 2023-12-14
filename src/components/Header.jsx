@@ -24,6 +24,16 @@ export default function Header({ landingRef, educationRef, aboutusRef, playgroun
     }
     
     return (
+        // <Flex position="fixed"
+        // top="0"
+        // left="0"
+        // right="0"
+        // borderBottom="1px"
+        // p={4}
+        // color="#FAF9F6"
+        // zIndex="999" // Set a high z-index to ensure it's above other elements
+        // justifyContent="center"
+        // bg="#1A202C">
         <Flex alignItems="center" justifyContent="center">
         <Flex borderBottom="1px " p={4} color="#FAF9F6" width="66%" 
             alignItems="center" justifyContent="center" gap="25px" >
