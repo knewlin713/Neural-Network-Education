@@ -1,10 +1,11 @@
 import { AspectRatio, Flex, Card, CardBody, Heading } from "@chakra-ui/react"
 import ReactPlayer from 'react-player'
+import { forwardRef } from "react"
 
-export default function Education() {
+const Education = forwardRef(({props}, ref) => {
     return(
         <Flex align={'center'} justify={'center'} marginTop={'75px'} direction={'column'} >
-            <Heading color='white'>Education Time</Heading>
+            <Heading color='white' ref={ref}>Education Time</Heading>
             <Flex justify={'space-around'}>
                 {/*<Card size='lg' backgroundColor={'#585B5B'}>
                     <CardBody>
@@ -17,4 +18,6 @@ export default function Education() {
             </Flex>
         </Flex>
     )
-}
+})
+
+export default Education;

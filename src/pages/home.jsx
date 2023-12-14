@@ -5,23 +5,30 @@ import Playground from './Playground';
 import Landing from '../components/Landing';
 import AboutUs from '../components/AboutUs'
 import Education from '../components/Education'
+import { useRef, forwardRef, createRef } from 'react';
 
 export default function Home(){
   
+    const educationRef = createRef();
+    const playgroundRef = useRef(null);
+    const aboutusRef = useRef(null);
+    const landingRef = useRef(null);
+
+    
     return(
         <div>
-        <Header />
+        <Header educationRef={educationRef} playgroundRef={playgroundRef} aboutusRef={aboutusRef} landingRef={landingRef}/>
         <div style={{ height: '100vh' }}>
-            <Landing />
+            <Landing ref={landingRef} playgroundRef={playgroundRef}/>
         </div>
         <div style={{ height: '100vh' }}>
-            <Education />
+            <Education ref={educationRef}/>
         </div>
-        <div style={{ height: '200vh' }}>
-            <Playground />
+        <div style={{ height: '200vh' }}>ref={}
+            <Playground ref={playgroundRef}/>
         </div>
         <div style={{ height: '100vh' }}>
-            <AboutUs />
+            <AboutUs ref={aboutusRef}/>
         </div>
         </div>
     )
