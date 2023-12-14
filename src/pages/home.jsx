@@ -15,7 +15,7 @@ export default function Home(){
             <Landing />
             <AboutUs />
             <Education />
-            {/* <Playground />   */}
+            <Playground />  
         </div>
     )
 }
