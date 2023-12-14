@@ -4,6 +4,7 @@ import backgroundImage from '../assets/spider.jpg';
 import Playground from './Playground';
 import Landing from '../components/Landing';
 import AboutUs from '../components/AboutUs'
+import Education from '../components/Education'
 
 export default function Home(){
   
@@ -12,8 +13,8 @@ export default function Home(){
             <Header />
             
             <Landing />
-            <AboutUs/>
-            
+            <AboutUs />
+            <Education />
             {/* <Playground />   */}
         </div>
     )
