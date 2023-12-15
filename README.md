@@ -12,7 +12,7 @@ Final Project for CLPS1291 Computational CogSci
 
 
 
-# (Written by Jesus, make sure you follow the rules below before developing locally)
+### (Written by Jesus, make sure you follow the rules below before developing locally)
 1. Make sure your node version is lts/iron
 
     a. Download node version manager (nvm), you can google and download it for your device
