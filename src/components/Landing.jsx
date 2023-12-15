@@ -29,10 +29,7 @@ const Landing = forwardRef(({playgroundRef}, ref) =>  {
                     <Image src='src/assets/Untitled design (3).png' />
                 </Flex>
             </Flex>
-            <Flex borderTop="1px solid"  borderBottom="3px solid" p={6} color="#FAF9F6" 
-                 alignItems="center" justifyContent="center" >
-                </Flex>
-            <Flex borderTop="1px solid"  borderBottom="5px solid" p={2} color="#FAF9F6" 
+            <Flex borderTop="1px solid"   p={6} color="#FAF9F6" 
                  alignItems="center" justifyContent="center" >
                 </Flex>
         </div>
