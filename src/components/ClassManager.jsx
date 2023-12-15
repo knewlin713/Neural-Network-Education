@@ -19,7 +19,7 @@ export default function ClassManager({classes, updateClasses, trainingData, upda
         {classes.map((classLabel, index) => (
             <ClassBox classLabel={classLabel} updateClasses={updateClasses} index={index} key={index} trainingData={trainingData} updateTrainingData={updateTrainingData}/>
         ))}
-        <AddIcon alignSelf={'center'} backgroundColor={'white'} cursor={'grab'} onClick={() => {addClass(); console.log(classes)}}/>
+        <AddIcon alignSelf={'center'} backgroundColor={'#FAF9F6'} cursor={'grab'} onClick={() => {addClass(); console.log(classes)}}/>
     </Flex>
   );
 }

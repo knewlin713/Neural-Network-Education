@@ -74,7 +74,7 @@ import { AddIcon } from '@chakra-ui/icons';
         <div style={{ width: '100%'}}>
             
             <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'} justifyContent={'center'}>
-                <Heading ref={ref} color="white">Playground</Heading>
+                <Heading ref={ref} color="#FAF9F6">Playground</Heading>
                 <Box display={'flex'} justifyContent={'center'}>
                 <ClassBox  align="center" display={'flex'} classLabel={"Class 0"} justifyContent={'center'} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                 </Box>
@@ -137,7 +137,7 @@ import { AddIcon } from '@chakra-ui/icons';
                     <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
       
                 </Flex>
-                <Text color='white'>
+                <Text color='#FAF9F6'>
       <strong>How to use the Playground:</strong><br />
       The top section labled "Neural Network" allows you to train your model <br />
       with the 'train model' button and after you upload a file and click on it, you <br />

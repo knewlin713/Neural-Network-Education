@@ -5,8 +5,8 @@ export default function About() {
         <div>
             <Header />
             <Landing />
-            <Heading color="white"> Mission </Heading>
-            <Text align={'center'} color="white">
+            <Heading color="#FAF9F6"> Mission </Heading>
+            <Text align={'center'} color="#FAF9F6">
                    Ready to take a dive into Artifical Intelligence and Object Recognition? 
             </Text>
             <AboutUs />

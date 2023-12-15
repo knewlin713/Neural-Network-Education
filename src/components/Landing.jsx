@@ -19,8 +19,8 @@ const Landing = forwardRef(({playgroundRef}, ref) =>  {
                 </Flex>
             <Flex>
                 <Flex justify='center' align='center' className='left-side' direction={'column'} width={'45%'}>
-                    <Heading color="white">Neural Network Education</Heading>
-                    <Text align={'center'} color="white">
+                    <Heading color="#FAF9F6">Neural Network Education</Heading>
+                    <Text align={'center'} color="#FAF9F6">
                    Ready to take a dive into Artifical Intelligence and Object Recognition?  <br />Try out our Playground!
                     </Text>
                     <Button style={{ marginTop: '20px' }} onClick={() => traverseToProject()}>Check it out</Button>

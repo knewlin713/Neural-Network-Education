@@ -5,15 +5,15 @@ import { forwardRef } from "react"
 const Education = forwardRef(({props}, ref) => {
     return(
         <Flex align={'center'} justify={'center'} marginTop={'75px'} direction={'column'} gap={4}>
-            <Text color={'white'}>
+            <Text color={'#FAF9F6'}>
                 Take a look at this short video! It will quickly explain how Object Recognition <br />in computers works and some common
                 misconceptions about Artifical Intelligence.
             </Text>
-            <Heading color='white' ref={ref}>Education Time</Heading>
+            <Heading color='#FAF9F6' ref={ref}>Education Time</Heading>
             <Flex justify={'space-around'}>
                 <ReactPlayer url="https://www.youtube.com/embed/U3JLszWWK_4?si=IYTFxnabnZNPkpSg" controls/>
             </Flex>
-            <Text color={'white'}>
+            <Text color={'#FAF9F6'}>
         In case you missed that, it is important to remember:<br />
         <strong>Neuron:</strong> In AI, a neuron is like a building block that helps computers <br />
         learn and make decisions by analyzing information and patterns, just like how our brain <br />

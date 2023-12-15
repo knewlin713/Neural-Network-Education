@@ -6,7 +6,7 @@ export default function Profile({profilePicture, about}) {
             <Avatar size={'2xl'} src={profilePicture} />
             <Card size='lg' width={'90%'} borderRadius={'md'} backgroundColor={'#585B5B'} boxShadow={'md'}>
                 <CardBody>
-                    <Text>
+                    <Text color={'#FAF9F6'}>
                      {about}
                     </Text>
                 </CardBody>
