@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import { Flex, Heading, Text } from "@chakra-ui/react"
-import Playground from './Playground';
+import Playground from '../components/Playground';
 import Landing from '../components/Landing';
 import AboutUs from '../components/AboutUs'
 import Education from '../components/Education'

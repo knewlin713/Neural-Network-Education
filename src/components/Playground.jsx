@@ -2,14 +2,13 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Box, Flex, Spacer, Heading, Button, ButtonGroup, IconButton } from '@chakra-ui/react';
-import NeuralNetwork from '../components/NeuralNetwork';
-import ImageUploader from '../components/ImageUploader';
-import ClassManager from '../components/ClassManager';
+import NeuralNetwork from './NeuralNetwork';
+import ImageUploader from './ImageUploader';
+import ClassManager from './ClassManager';
 import { forwardRef, useState, useEffect } from 'react';
-import TensorFlowTest from '../components/TensorFlowTest';
+import TensorFlowTest from './TensorFlowTest';
 import { train } from '@tensorflow/tfjs';
-import './Playground.css'
-import ClassBox from '../components/ClassBox';
+import ClassBox from './ClassBox';
 import { AddIcon } from '@chakra-ui/icons';
 
  const Playground = forwardRef(({props}, ref) => {
@@ -96,17 +95,6 @@ import { AddIcon } from '@chakra-ui/icons';
                         >
                             <TensorFlowTest testImage={images[testImageIndex]} classes={classes} trainingData={trainingData} model={model} updateModel={updateModel} updateActivations={updateActivations}/>
                             <Divider borderColor={'black'} padding={'2'}/>
-                            {/* <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/>  */}
-                        {/* </Box>
-                        <Box
-                        justifySelf="center"
-                        borderWidth="1px"
-                        borderRadius="lg"
-                        overflow="hidden"
-                        backgroundColor="#FAF9F6"
-                        height="100%"
-                        width={'100%'}
-                        > */}
                             <ImageUploader testImageIndex={testImageIndex} images={images} updateTestImageIndex={updateTestImageIndex} updateImages={updateImages}/> 
                         </Box>
                     

@@ -5,10 +5,6 @@ import { useState } from 'react'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/home'
-import About from './pages/about'
-import Contact from './pages/contact'
-import NoPage from './pages/NoPage'
-import Playground from './pages/Playground'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import 'typeface-ibm-plex-mono';
 
