@@ -1,4 +1,17 @@
 
+# Neural Network Education
+By: Jesus Rodriguez, Kaley Newlin, Keyan Rahimi
+
+Website link: https://neural-network-education.web.app/
+
+Final Project for CLPS1291 Computational CogSci
+
+
+---
+
+
+
+
 # (Written by Jesus, make sure you follow the rules below before developing locally)
 1. Make sure your node version is lts/iron
 
