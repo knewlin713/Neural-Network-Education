@@ -45,8 +45,8 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
   } 
     
     return(
-        <Flex direction={'column'} borderWidth="1px" borderRadius="lg" backgroundColor="white" width="500px" height="100%" gap={'10px'} margin={'10px   '}>
-        <Flex direction={'row'} justify={'center'} align={'center'} >
+        <Flex direction={'column'} borderWidth="1px" borderRadius="lg" backgroundColor="white" width="500px" height="100%" gap={'10px'} margin={'10px   '}justifyContent={'center'}>
+        <Flex direction={'row'} justify={'center'} align={'center'} justifyContent={'center'}>
         <Text  as='b'>{className}</Text>
         {editMode ? (
           <>

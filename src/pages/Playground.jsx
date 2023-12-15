@@ -63,18 +63,18 @@ import { AddIcon } from '@chakra-ui/icons';
     return(
         <div style={{ width: '100%'}}>
             
-            <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'}>
+            <Flex className="center" align="center" direction="column" overflow={'scroll'} width={'100%'} height={'100%'} justifyContent={'center'}>
                 <Heading ref={ref} color="white">Playground</Heading>
-                <Box>
-                <ClassBox classLabel={"Class 0"} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
+                <Box display={'flex'} justifyContent={'center'}>
+                <ClassBox  align="center" display={'flex'} classLabel={"Class 0"} justifyContent={'center'} updateClasses={updateClasses} index={0} key={0} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                 </Box>
 
-                <Flex align={'center'} justify={'flex-start'} width={'100%'} gap={'50px'} height={'100%'} >
+                <Flex display={'flex'} align={'center'} justifyContent={'center'} width={'110%'} gap={'50px'} height={'100%'}>
                     {/* <Box width={'25%'}> */}
                     <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                     {/* </Box> */}
                     {/* <Spacer /> */}
-                    <Flex width={'25%'} direction={'column'}>
+                    <Flex align={'center'} width={'25%'} direction={'column'}>
                         <Box
                         justifySelf="center"
                         borderWidth="1px"
@@ -114,7 +114,7 @@ import { AddIcon } from '@chakra-ui/icons';
                     {/* <Spacer /> */}
                     <Flex width='25%' justify={'center'}> 
                     {classes[3] ?
-                     <ClassBox  classLabel={"Class 2"} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
+                     <ClassBox  classLabel={"Class 2"} justifyContent={'center'} updateClasses={updateClasses} index={2} key={2} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                      : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()}/>}
                     </Flex>
                 </Flex>
