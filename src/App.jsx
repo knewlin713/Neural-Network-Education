@@ -40,16 +40,6 @@ function App() {
   return (
     <div style={styles}>
       <ChakraProvider theme={theme}>
-      {/* <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NoPage />} />
-          <Route path="playground" element={<Playground />} />
-        </Routes>
-      </BrowserRouter> */}
       <Home />
       </ChakraProvider>
       </div>
