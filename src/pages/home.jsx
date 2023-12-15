@@ -61,7 +61,7 @@ export default function Home(){
       you have to have access to a folder containing <strong>hundreds</strong>   <br />of images of that object in order for your model to be fairly accurate. <br />
       <br />
       The section below that area allows you to visualize the virtual  <br /> neurons with the tabs. 
-      Press 'Overall Structure' and then 'Graph' in order to egt an overall  <br />view of your model.
+      Press 'Overall Structure' and then 'Graph' in order to get a general  <br />view of your model.
       Press 'Detailed View' and then 'Detailed Draw' to get an image that  <br />represents you entire 
       network, with all of the virtual neurons. It is a big network! It can  <br />really help your 
       perception of your model!  Adding a Hidden layer with the 'Add Hidden Layer' <br /> button can show you 

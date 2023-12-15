@@ -13,6 +13,7 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
 
 
   const handleRefClick = () => {
+    fileInputRef.current.setAttribute('multiple', 'multiple')
     fileInputRef.current.click();
   };
   const handleChange = (event) => {
@@ -25,7 +26,6 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
     setClassName(value);
     console.log('New Value:', value);
     const newClass = classes.map((classLabel, i) => (i === index ? value : classLabel));
-    console.log('Updated Classes:', newClass);
     updateClasses(newClass);
   };
 
@@ -34,14 +34,22 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
    * @param {React.ChangeEvent<HTMLInputElement>} e 
    */
   const handleImageUpload = (e) => {
-    //get file from event
-    const file = e.target.files[0];
-    //set image path
-    if (file) {
-      setImages([...images, {src: URL.createObjectURL(file), highlighted: 0}]);
-      updateTrainingData([...trainingData, {classID: index, imagePath: URL.createObjectURL(file)}]);
-      console.log(trainingData);
+    const files = e.target.files;
+  if (files.length > 0) {
+    const folderImages = [];
+    const folderTrainingData = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const imageUrl = URL.createObjectURL(file);
+
+      folderImages.push({ src: imageUrl, highlighted: 0 });
+      folderTrainingData.push({ classID: index, imagePath: imageUrl });
     }
+
+    setImages([...images, ...folderImages]);
+    updateTrainingData([...trainingData, ...folderTrainingData]);
+  }
   } 
     
     return(
