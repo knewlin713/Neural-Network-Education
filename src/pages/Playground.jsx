@@ -84,7 +84,7 @@ import { AddIcon } from '@chakra-ui/icons';
                     <ClassBox classLabel={"Class 1"} updateClasses={updateClasses} index={1} key={1} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                     {/* </Box> */}
                     {/* <Spacer /> */}
-                    <Flex align={'center'} width={'25%'} direction={'column'}>
+                    <Flex align={'center'} width={'25%'} direction={'column'} height={'90vh'}>
                         <Box
                         justifySelf="center"
                         borderWidth="1px"
@@ -133,9 +133,27 @@ import { AddIcon } from '@chakra-ui/icons';
                      <ClassBox  classLabel={"Class 3"} updateClasses={updateClasses} index={3} key={3} trainingData={trainingData} updateTrainingData={updateTrainingData} classes={classes}/> 
                      : <IconButton icon={<AddIcon />} size={'lg'} onClick={() => addClass()} marginTop={'100px'} marginBottom={'100px'}/>}
                 </Flex>
-                <Flex  borderWidth='1px' borderRadius='lg' backgroundColor="#FAF9F6" width={'95%'} height={'550px'} overflowY="auto">
+                <Flex  borderWidth='1px' borderRadius='lg' backgroundColor="#FAF9F6" width={'95%'} maxHeight={'550px'} overflowY="auto">
                     <NeuralNetwork model={model} classes={classes} updateModel={updateModel}/>
+      
                 </Flex>
+                <Text color='white'>
+      <strong>How to use the Playground:</strong><br />
+      The top section labled "Neural Network" allows you to train your model <br />
+      with the 'train model' button and after you upload a file and click on it, you <br />
+      can press the 'get predicition' button for the neural network to tell you what it thinks <br />
+      the object is. <br /><br /> Using the class boxes surrounding the center neural network box,
+      you can add training data <br /> and class (or object) names. We have some images set up for you so that <br />
+      class 0 represents dogs and class 1 represents cats. It is important to <br />remember that if you want to train your neural network on a new object,<br />
+      you have to have access to a folder containing <strong>hundreds</strong>   <br />of images of that object in order for your model to be fairly accurate. <br />
+      <br />
+      The section below that area allows you to visualize the virtual  <br /> neurons with the tabs. 
+      Press 'Overall Structure' and then 'Graph' in order to get a general  <br />view of your model.
+      Press 'Detailed View' and then 'Detailed Draw' to get an image that  <br />represents you entire 
+      network, with all of the virtual neurons. It is a big network! It can  <br />really help your 
+      perception of your model!  Adding a Hidden layer with the 'Add Hidden Layer' <br /> button can show you 
+      how adding more virtual neurons changes the shape of the model. It also  <br />may effect its predictions!<br /> <br /> <br />
+      </Text>
             </Flex>
 
            
