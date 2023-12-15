@@ -15,7 +15,10 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
     const [trainingDataOutputs, setTrainingDataOutputs] = useState([]);
     const mobilenetRef = useRef(null);
     const [modelLoaded, setModelLoaded] = useState(false);
-    
+    useEffect(() => {
+        console.log("tfjs component rerendered");
+      });
+      
     useEffect(() => {
         (async() => {
             const URL = 'https://tfhub.dev/google/tfjs-model/imagenet/mobilenet_v3_small_100_224/feature_vector/5/default/1';
@@ -27,8 +30,23 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             } catch {
                 console.error("mobile net didnt load")
             }
+            
         })();
     }, [])
+
+    useEffect(() => {
+        const loadAndTrain = async () => {
+            if (modelLoaded) {
+                await loadModel();
+                // Ensure the model is loaded before calling train
+                train();
+            }
+          
+        };
+        
+      
+        loadAndTrain();
+      }, [modelLoaded]); 
 
 
     const getActivations =  (input, model, layer) => {
@@ -113,9 +131,13 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
         updateModel(modelHead);
         modelHead.summary();
         gatherData();
-        setModelLoaded(true);
+        if (!modelLoaded) {
+            setModelLoaded(prev => !prev);
+        }
         const layers = modelHead.layers;
-        train();
+        // train();
+        // setModelLoaded(true);
+
         //if the thing is last layer, kernel.shape[0] for input, [1] for output   
         // const surface = { name: 'Model Architecture', tab: 'Model' };
         // tfvis.show.modelSummary(modelHead, surface);
@@ -139,6 +161,7 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
         inputsAsTensor.dispose();
         console.log(inputsAsTensor);
         //predict loop
+        updateModel(model);
 
     }   
     
@@ -173,16 +196,17 @@ export default function TensorFlowTest({ testImage, classes, trainingData, model
             console.log(imageFeatures);
             inputs.push(imageFeatures);
             outputs.push(currClassID);
+            setTrainingDataInputs(prevIn => [...prevIn, imageFeatures]);
+            setTrainingDataOutputs(prevOut => [...prevOut, currClassID]);
         }
 
-        setTrainingDataInputs(inputs);
-        setTrainingDataOutputs(outputs);
+        
     }
     
     return (
         <Flex direction={'column'} justifyContent={'center'} alignItems={'center'}>
             <Heading size={'lg'}>Neural Network</Heading>
-            <Text>{!modelLoaded ? 'Neural Network is not loaded' : 'Neural Network loaded!'}</Text>
+            <Text>{modelLoaded ? 'Neural Network loaded!' : 'Neural Network is not loaded'}</Text>
             <Button onClick={() => loadModel()}>Train model</Button>
             
             <Button onClick={() => predict()}>Get prediction</Button>

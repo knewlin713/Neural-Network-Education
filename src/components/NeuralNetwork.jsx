@@ -18,6 +18,10 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
   const [connectionsData, setConnectionsData] = useState([]);
 
   useEffect(() => {
+    console.log("neural network rerendered");
+  });
+  
+  useEffect(() => {
     // Render the graph and detailed view when the component mounts
     const initialize = async () => {
       try {
@@ -29,7 +33,7 @@ export default function NeuralNetwork({ model, updateModel, activations, classes
 
         console.log('Initializing visualization...');
         await visualizeNeuralNetwork();
-        await detailedNNViz();
+        // await detailedNNViz();
         console.log('Visualization complete.');
       } catch (error) {
         console.error('Error during initialization:', error);

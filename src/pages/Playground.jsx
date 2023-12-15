@@ -1,11 +1,11 @@
-import Header from '../components/header';
+// import Header from '../components/header';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Divider } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Box, Flex, Spacer, Heading, Button, ButtonGroup, IconButton } from '@chakra-ui/react';
 import NeuralNetwork from '../components/NeuralNetwork';
 import ImageUploader from '../components/ImageUploader';
 import ClassManager from '../components/ClassManager';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useEffect } from 'react';
 import TensorFlowTest from '../components/TensorFlowTest';
 import { train } from '@tensorflow/tfjs';
 import './Playground.css'
@@ -21,6 +21,10 @@ import { AddIcon } from '@chakra-ui/icons';
     //testImage: {classID: number, imagePath: string}
     const [forceRerender, setForceRerender] = useState(false);
 
+    useEffect(() => {
+        console.log("playgrond rerendered");
+      });
+      
     const [trainingData, setTrainingData] = useState([
         
         {classID: 0 , imagePath: 'src/trainingData/dog1.jpeg'},
@@ -33,31 +37,37 @@ import { AddIcon } from '@chakra-ui/icons';
 
     const updateTrainingData = (newTrainingData) => {
         setTrainingData(newTrainingData);
+        // setForceRerender((prev) => !prev);
     }
     const updateTestImageIndex = (newTestImage, newImages) => {
         setTestImageIndex(newTestImage);
+        // setForceRerender((prev) => !prev);
       };
 
     const updateImages = (newImages) => {
         setImages(newImages);
+        // setForceRerender((prev) => !prev);
     }
 
     const updateClasses = (newClass) => {
         console.log('Received Updated Classes:', newClass);
         setClasses(newClass);
+        // setForceRerender((prev) => !prev);
     }
 
     const updateModel = (newModel) => {
         setModel(newModel);
+        // setForceRerender((prev) => !prev);
     }
 
     const updateActivations = (newActivation) => {
         setActivations(newActivation);
+        // setForceRerender((prev) => !prev);
     }
 
     const addClass = () => {
         setClasses([...classes, "Class " + classes.length]);
-        setForceRerender((prev) => !prev);
+        // setForceRerender((prev) => !prev);
     }
     
     return(

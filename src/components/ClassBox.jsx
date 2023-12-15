@@ -1,10 +1,14 @@
 import { Box, Input, Text, Button, Flex, Divider, Grid, Image, IconButton } from '@chakra-ui/react';
 import { EditIcon, AddIcon } from '@chakra-ui/icons';
-import { useState, useRef } from 'react'; 
+import { useState, useRef, useEffect } from 'react'; 
 import { Add } from '@tensorflow/tfjs';
 
 
 export default function ClassBox({ classes, classLabel, updateClasses, index, trainingData, updateTrainingData }) {
+  useEffect(() => {
+    console.log("class box rerendered");
+  });
+  
   const [editMode, setEditMode] = useState(false);
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
@@ -38,8 +42,8 @@ export default function ClassBox({ classes, classLabel, updateClasses, index, tr
     const file = e.target.files[0];
     //set image path
     if (file) {
-      setImages([...images, {src: URL.createObjectURL(file), highlighted: 0}]);
-      updateTrainingData([...trainingData, {classID: index, imagePath: URL.createObjectURL(file)}]);
+      setImages(prevImages => [...prevImages, {src: URL.createObjectURL(file), highlighted: 0}]);
+      updateTrainingData(prevData => [...prevData, {classID: index, imagePath: URL.createObjectURL(file)}]);
       console.log(trainingData);
     }
   } 
