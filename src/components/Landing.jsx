@@ -26,7 +26,7 @@ const Landing = forwardRef(({playgroundRef}, ref) =>  {
                     <Button style={{ marginTop: '20px' }} onClick={() => traverseToProject()}>Check it out</Button>
                 </Flex>
                 <Flex justify={'center'} align={'center'} width={'55%'} className='right-side'>
-                    <Image src='src/assets/Untitled design (3).png' />
+                    <Image src='src/assets/face.JPG' />
                 </Flex>
             </Flex>
             <Flex borderTop="1px solid"   p={6} color="#FAF9F6" 
