@@ -12,7 +12,7 @@ const Education = forwardRef(({props}, ref) => {
                         hi
                     </CardBody>
                 </Card>*/}
-                <ReactPlayer url="https://www.youtube.com/embed/NOEy_9DgLvU?si=ay-Iqk4YCt8Jgh32"/>
+                <ReactPlayer url="https://www.youtube.com/embed/aircAruvnKk?si=50V7Z_lM5pv5k5Yv"/>
                 {/* <AspectRatio ratio={1} height={'100%'} width={'560px'}>
                 <video width="560" height="560" src="https://www.youtube.com/embed/NOEy_9DgLvU?si=ay-Iqk4YCt8Jgh32" title="YouTube video player" allowFullScreen/>
                 </AspectRatio> */}

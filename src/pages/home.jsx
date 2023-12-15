@@ -54,9 +54,9 @@ export default function Home(){
       <strong>How to use the Playground:</strong><br />
       The top section labled "Neural Network" allows you to train your model <br />
       with the 'train model' button and after you upload a file and click on it, you <br />
-      can press the 'get predicition' button for the nueral network to tell you what it thinks <br />
+      can press the 'get predicition' button for the neural network to tell you what it thinks <br />
       the object is. <br /><br /> Using the class boxes surrounding the center neural network box,
-      you can add training data <br /> and class ( or object) names. We have some images set up for you so that <br />
+      you can add training data <br /> and class (or object) names. We have some images set up for you so that <br />
       class 0 represents dogs and class 1 represents cats. It is important to <br />remember that if you want to train your neural network on a new object,<br />
       you have to have access to a folder containing <strong>hundreds</strong>   <br />of images of that object in order for your model to be fairly accurate. <br />
       <br />
