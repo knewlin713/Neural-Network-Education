@@ -27,12 +27,12 @@ import { AddIcon } from '@chakra-ui/icons';
       
     const [trainingData, setTrainingData] = useState([
         
-        {classID: 0 , imagePath: '/trainingData/dog1.jpg'},
-        {classID: 0 , imagePath: '/trainingData/dog2.jpg'},
-        {classID: 0 , imagePath: '/trainingData/dog3.jpg'},
-        {classID: 1 , imagePath: '/trainingData/cat2.jpg'},
-        {classID: 1 , imagePath: '/trainingData/cat3.jpg'},
-        {classID: 1 , imagePath: '/trainingData/cat4.jpg'},
+        {classID: 0 , imagePath: '/trainingData/dog1.jpeg'},
+        {classID: 0 , imagePath: '/trainingData/dog2.jpeg'},
+        {classID: 0 , imagePath: '/trainingData/dog3.jpeg'},
+        {classID: 1 , imagePath: '/trainingData/cat2.jpeg'},
+        {classID: 1 , imagePath: '/trainingData/cat3.jpeg'},
+        {classID: 1 , imagePath: '/trainingData/cat4.jpeg'},
     ]);
 
     const updateTrainingData = (newTrainingData) => {

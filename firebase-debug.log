@@ -1,0 +1,27 @@
+[debug] [2023-12-15T06:52:03.293Z] ----------------------------------------------------------------------
+[debug] [2023-12-15T06:52:03.295Z] Command:       /Users/jesus/.nvm/versions/node/v20.9.0/bin/node /Users/jesus/.nvm/versions/node/v20.9.0/bin/firebase deploy
+[debug] [2023-12-15T06:52:03.295Z] CLI Version:   13.0.2
+[debug] [2023-12-15T06:52:03.295Z] Platform:      darwin
+[debug] [2023-12-15T06:52:03.295Z] Node Version:  v20.9.0
+[debug] [2023-12-15T06:52:03.295Z] Time:          Fri Dec 15 2023 01:52:03 GMT-0500 (Eastern Standard Time)
+[debug] [2023-12-15T06:52:03.295Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-12-15T06:52:03.332Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-12-15T06:52:03.332Z] > authorizing via signed-in user (rodriguez.jesus0824@gmail.com)
+[debug] [2023-12-15T06:52:03.332Z] [iam] checking project neural-network-education for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-12-15T06:52:03.333Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/neural-network-education:testIamPermissions [none]
+[debug] [2023-12-15T06:52:03.333Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/neural-network-education:testIamPermissions x-goog-quota-user=projects/neural-network-education
+[debug] [2023-12-15T06:52:03.333Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/neural-network-education:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-12-15T06:52:03.540Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/neural-network-education:testIamPermissions 200
+[debug] [2023-12-15T06:52:03.540Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/neural-network-education:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-12-15T06:52:03.541Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/neural-network-education [none]
+[debug] [2023-12-15T06:52:03.786Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/neural-network-education 200
+[debug] [2023-12-15T06:52:03.786Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/neural-network-education {"projectId":"neural-network-education","projectNumber":"168139425736","displayName":"neural-network-education","name":"projects/neural-network-education","resources":{"hostingSite":"neural-network-education"},"state":"ACTIVE","etag":"1_a6572391-129a-4665-93cb-02b0e0bd1560"}
+[info] 
+[info] === Deploying to 'neural-network-education'...
+[info] 
+[info] i  deploying hosting 
+[info] Running command: npm run build
+[info] ✔  hosting: Finished running predeploy script. 
+[debug] [2023-12-15T06:52:11.095Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/neural-network-education/versions [none]
+[debug] [2023-12-15T06:52:11.095Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/neural-network-education/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
