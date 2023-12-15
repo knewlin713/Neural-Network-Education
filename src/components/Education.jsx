@@ -11,7 +11,7 @@ const Education = forwardRef(({props}, ref) => {
             </Text>
             <Heading color='white' ref={ref}>Education Time</Heading>
             <Flex justify={'space-around'}>
-                <ReactPlayer url="https://www.youtube.com/embed/aircAruvnKk?si=50V7Z_lM5pv5k5Yv" controls/>
+                <ReactPlayer url="https://www.youtube.com/embed/U3JLszWWK_4?si=IYTFxnabnZNPkpSg" controls/>
             </Flex>
             <Text color={'white'}>
         In case you missed that, it is important to remember:<br />
